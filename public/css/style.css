@@ -5,6 +5,8 @@ body {
     font-family: "Inter";
 }
 
+/*  ----------------------  navbar -----------------------------------*/
+
 #nav_bar {
     display: flex;
     align-items: center;
@@ -63,4 +65,59 @@ body {
 
 .btn:hover {
     background-color: #FF6381;
+}
+
+/*----------------------  section conheca -----------------------------------*/
+
+#conheca {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#conheca #conheca_valorant {
+    padding: 40px;
+    width: 33%;
+}
+
+/*----------------------  section agentes -----------------------------------*/
+
+#agentes {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#agentes #agentes_valorant {
+    padding: 60px;
+    width: 30%;
+}
+
+.imagem {
+    overflow: hidden;
+    width: 100vh; 
+    height: 60vh; 
+}
+
+.imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#botao_agentes button{
+    color: white;
+    font-family: "Inter";
+    font-size: 16px;
+    width: 100%;
+    height: 60px;
+    background-color: #FF4655;
+    border-radius: 10px;
+    border: solid #FF4655;
+    cursor: pointer;
+    
 }
