@@ -168,7 +168,7 @@ body {
     height: 80vh;
     width: 100%;
     background-color: #0F1923;
-    background-image: url("/public/assets/imgs/agentes_horizontal.png");
+    background-image: url(../assets/imgs/agentes_horizontal.png);
     Background-repeat: no-repeat;
     Background-position: center;
     background-size: 100%;
