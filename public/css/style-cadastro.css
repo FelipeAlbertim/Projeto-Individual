@@ -16,7 +16,7 @@ body {
     padding: 10px;
 }
 
-#nav_bar ul li a{
+#nav_bar ul li a {
     text-decoration: none;
     color: white;
 }
@@ -76,8 +76,7 @@ body {
 
 /*  ----------------------  cadastro -----------------------------------*/
 
-#container{
-    border: solid 10px white;
+#container {
     display: flex;
     width: 90%;
     height: 100%;
@@ -85,49 +84,99 @@ body {
     align-items: center;
 }
 
-#cadastro{
+#cadastro {
     display: flex;
-    border: solid 10px red;
     justify-content: space-around;
     width: 100%;
 }
 
-#formulario_cadastro{
-    border: solid 10px blue;
+#formulario_cadastro {
     height: auto;
 }
-#nome_cadastro{
-    box-sizing: border-box;
-    border: solid 10px green;
-    height: 100%;
-    max-width: 673px;
+
+#nome_cadastro {
     display: flex;
-    flex-wrap: wrap;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    height: 30%;
+    max-width: 100%;
+    gap: 1rem;
 }
-#foto-cadastro{
-    border: solid 10px purple;
-    height: 75vh;
+
+#foto-cadastro {
+    height: 90vh;
     width: 40%;
     background-image: url(../assets/imgs/poster-cadastro.webp);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 75%;
 }
-#texto-cadastro{
-    border: solid 10px cyan;
+
+#texto-cadastro {
     height: auto;
 }
 
-#formulario_cadastro #nome_cadastro h3{
+#formulario_cadastro #nome_cadastro h3 {
     color: white;
     font-weight: normal;
 }
 
-#historia{
+#historia {
     width: 100%;
     height: 20vh;
 }
 
-h3{
+h3 {
     color: white;
+}
+
+/*  ----------------------  INPUTS -----------------------------------*/
+
+
+#cadastro input {
+    background: none;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 4px;
+    width: 97%;
+    height: 3vh;
+    font-family: 'Inter';
+    font-size: 16px;
+    padding: 10px;
+}
+
+
+#cadastro textarea {
+    background: none;
+    border: 1px solid grey;
+    border-radius: 3px;
+    height: 10vh;
+    width: 95%;
+    margin-bottom: 5%;
+    padding: 10px;
+}
+
+.nomes {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 48%;
+}
+
+#cadastro button {
+    background-color: #FF4655;
+    border-radius: 15px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    font-family: "Inter";
+    font-size: 20px;
+    color: none;
+    width: 100%;
+    height: 75px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
