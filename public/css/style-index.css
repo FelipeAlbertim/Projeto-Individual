@@ -7,15 +7,17 @@ body {
 
 /*  ----------------------  navbar -----------------------------------*/
 
+
 #nav_bar {
     display: flex;
     align-items: center;
+    height: 80px;
     justify-content: space-between;
     background-color: #0F1923;
     padding: 10px;
 }
 
-#nav_bar ul li a{
+#nav_bar ul li a {
     text-decoration: none;
     color: white;
 }
