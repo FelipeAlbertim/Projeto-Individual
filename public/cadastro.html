@@ -15,22 +15,33 @@
 
 <body>
     <div id="nav_bar">
-        <div id="logo">
-            <div id="foto">
-                <img src="assets/icon/logo.png">
+        <a href="index.html">
+            <div id="logo">
+                <div id="foto">
+                    <img src="assets/icon/logo.png">
+                </div>
+                <div id="valorant">
+                    <img src="assets/icon/valorant.png">
+                </div>
             </div>
-            <div id="valorant">
-                <img src="assets/icon/valorant.png">
-            </div>
-        </div>
-
+        </a>
         <div id="menu">
             <ul>
-                <li> <a href="index.html#conheca">Home</a> </li>
-                <li><a href="index.html#agentes">Agentes</a></li>
-                <li><a href="index.html#mapas">Mapas</a></li>
-                <li><a href="index.html#quiz">Quiz</a></li>
-                <li class="btn"><a href="login.html">Login</a> </li>
+                <a href="index.html">
+                    <li> Home</li>
+                </a>
+                <a href="index.html#agentes">
+                    <li>Agentes</li>
+                </a>
+                <a href="index.html#mapas">
+                    <li>Mapas</li>
+                </a>
+                <a href="index.html#quiz">
+                    <li>Quiz</li>
+                </a>
+                <a href="login.html">
+                    <li class="btn">Login</li>
+                </a>
             </ul>
         </div>
     </div>
@@ -46,13 +57,16 @@
                     <div id="nome_cadastro">
 
                         <div class="nomes">
-                            <h3 style="color: white;font-size: 16px;font-weight: normal;">*Nome de usuário: </h3>
-                            <input type="text" id="ipt_nome_usuario" placeholder="xX-F3L1P3-Xx" >
+                            <h3 class="h3_nomes" style="color: white;font-size: 18px;font-weight: normal;">*Nome de
+                                usuário: </h3>
+                            <input type="text" id="ipt_nome_usuario" placeholder="xX-F3L1P3-Xx" required
+                                onmousemove="trocaCor()">
                         </div>
 
                         <div class="nomes">
-                            <h3  style="color: white;font-size: 16px;font-weight: normal;">Nome real:</h3>
-                            <input type="text" id="nome_real" placeholder="Felipe Albertim" >
+                            <h3 class="h3_nomes" style="color: white;font-size: 18px;font-weight: normal;">Nome real:
+                            </h3>
+                            <input type="text" id="nome_real" placeholder="Felipe Albertim">
                         </div>
 
                     </div>
@@ -63,10 +77,13 @@
                     <h3>*Senha:</h3>
                     <input type="password" id="ipt_senha" placeholder="•••••••••••••">
 
-                    <h3>Como conheceu o valorant:</h3>
-                    <textarea maxlength="500" id="historia" placeholder="Escreva como você conheceu o valorant" style="font-family: 'Inter'; padding: 16px;"></textarea>
+                    <h3>Sua história:</h3>
+                    <textarea maxlength="500" id="historia" placeholder="Escreva como você conheceu o valorant"
+                        style="font-family: 'Inter'; padding: 16px;"></textarea>
 
-                    <button>Cadastre-se</button>
+                    <a href="index.html">
+                        <button id="btn_cadastro">Cadastre-se</button>
+                    </a>
 
                 </div>
             </div>

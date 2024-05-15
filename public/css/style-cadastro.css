@@ -94,6 +94,12 @@ body {
     height: auto;
 }
 
+#btn_cadastro, a{
+    text-decoration: none;
+    color: none;
+    cursor: pointer;
+}
+
 #nome_cadastro {
     display: flex;
     box-sizing: border-box;
@@ -113,8 +119,9 @@ body {
     background-size: 100%;
 }
 
-#texto-cadastro {
+#texto-cadastro h1 {
     height: auto;
+    margin-top: 3%;
 }
 
 #formulario_cadastro #nome_cadastro h3 {
@@ -127,19 +134,31 @@ body {
     height: 20vh;
 }
 
-h3 {
+h3{
     color: white;
+    margin-top: 4%;
+    margin-bottom: 2px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.h3_nomes{
+margin: 0px;
+margin-top: 3%;
+padding: 5px;
 }
 
 /*  ----------------------  INPUTS -----------------------------------*/
 
 
 #cadastro input {
+    color: rgb(192, 192, 192);
     background: none;
     border: 1px solid grey;
     border-radius: 3px;
     padding: 4px;
-    width: 97%;
+    width: calc(100% - 0.5rem);
     height: 3vh;
     font-family: 'Inter';
     font-size: 16px;
@@ -152,7 +171,7 @@ h3 {
     border: 1px solid grey;
     border-radius: 3px;
     height: 10vh;
-    width: 95%;
+    width: calc(100% - 1rem);
     margin-bottom: 5%;
     padding: 10px;
 }
@@ -171,12 +190,19 @@ h3 {
     transition: background-color 0.3s ease;
     font-family: "Inter";
     font-size: 20px;
-    color: none;
-    width: 100%;
+    width: calc(100% + 1rem);
     height: 75px;
     border-radius: 10px;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#ipt_nome_usuario:hover{
+    outline: solid #FF4655 3px;
+}
+
+#ipt_nome_usuario:focus .h3_nomes{
+    color: #FF4655;    
 }
