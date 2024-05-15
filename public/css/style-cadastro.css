@@ -105,12 +105,12 @@ body {
 }
 
 #foto-cadastro {
-    height: 90vh;
-    width: 40%;
+    height: 800px;
+    width: 600px;
     background-image: url(../assets/imgs/poster-cadastro.webp);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 75%;
+    background-size: 100%;
 }
 
 #texto-cadastro {
