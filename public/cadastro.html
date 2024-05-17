@@ -128,22 +128,23 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
+        // crie um atributo que recebe o valor recuperado aqui - OK
+        // Agora vá para o arquivo routes/usuario.js - 
+
+        nomeUsuarioServer: nomeUsuarioVar,
+        nomeRealServer: nomeRealVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        empresaServer: empresaVar
+        historiaServer: historiaVar
       }),
     })
       .then(function (resposta) {
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          cardErro.style.display = "block";
-
+          
           mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+            alert("CADASTRO REALIZADO COM SUCESSO !");
 
           setTimeout(() => {
             window.location = "login.html";
