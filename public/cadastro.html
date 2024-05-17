@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant's Club | Cadastro</title>
     <link rel="stylesheet" href="css/style-cadastro.css">
+
+    <script src="./js/sessao.js"></script>
+
     <link rel="icon" href="assets/icon/icon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,7 +69,7 @@
                         <div class="nomes">
                             <h3 class="h3_nomes" style="color: white;font-size: 18px;font-weight: normal;">Nome real:
                             </h3>
-                            <input type="text" id="nome_real" placeholder="Felipe Albertim">
+                            <input type="text" id="ipt_nome_real" placeholder="Felipe Albertim">
                         </div>
 
                     </div>
@@ -78,7 +81,7 @@
                     <input type="password" id="ipt_senha" placeholder="•••••••••••••">
 
                     <h3>Sua história:</h3>
-                    <textarea maxlength="500" id="historia" placeholder="Escreva como você conheceu o valorant"
+                    <textarea maxlength="500" id="ipt_historia" placeholder="Escreva como você conheceu o valorant"
                         style="font-family: 'Inter'; padding: 16px;"></textarea>
 
                     <a href="index.html">
@@ -101,3 +104,11 @@
 </body>
 
 </html>
+
+<script>
+    var nomeUsuarioVar = ipt_nome_usuario.value
+    var nomeRealVar = ipt_nome_real.value
+    var emailVar = ipt_email.value
+    var senhaVar = ipt_senha.value
+    var historiaVar = ipt_historia.value
+</script>
