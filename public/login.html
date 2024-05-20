@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant's Club | Login</title>
     <link rel="stylesheet" href="css/style-login.css">
+
+    <script src="./js/sessao.js"></script>
+
     <link rel="icon" href="assets/icon/icon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,17 +57,16 @@
 
 
                         <h3>*Endereço de email:</h3>
-                        <input type="email" id="ipt_email" placeholder="felipe@valorant-club.com">
+                        <input type="email" id="email_input" placeholder="felipe@valorant-club.com">
 
                         <h3>*Senha:</h3>
-                        <input type="password" id="ipt_senha" placeholder="•••••••••••••">
+                        <input type="password" id="senha_input" placeholder="•••••••••••••">
 
                         <div id="esqueceu_senha">
                             <a href="#" id="esqueceu">Esqueceu a senha?</a>
                         </div>
-                        <a href="index.html">
-                            <button id="btn_cadastro">Acesse</button>
-                        </a>
+                        
+                            <button id="btn_cadastro" onclick="entrar()">Acesse</button>
 
                     </div>
                 </div>
@@ -73,3 +75,74 @@
 </body>
 
 </html>
+
+<script>
+
+
+    function entrar() {
+        aguardar();
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            alert('Os campos com * devem ser preenchidos')
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+
+                    setTimeout(function () {
+                        window.location = "index.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+</script>
