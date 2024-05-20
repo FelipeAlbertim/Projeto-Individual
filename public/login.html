@@ -114,13 +114,14 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
+                    
                     sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
 
                     setTimeout(function () {
                         window.location = "index.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 500);
 
                 });
 
@@ -139,10 +140,6 @@
         })
 
         return false;
-    }
-
-    function sumirMensagem() {
-        cardErro.style.display = "none"
     }
 
 </script>
