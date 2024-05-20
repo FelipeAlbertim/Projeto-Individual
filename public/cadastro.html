@@ -62,8 +62,7 @@
                         <div class="nomes">
                             <h3 class="h3_nomes" style="color: white;font-size: 18px;font-weight: normal;">*Nome de
                                 usuário: </h3>
-                            <input type="text" id="ipt_nome_usuario" placeholder="xX-F3L1P3-Xx" required
-                                onmousemove="trocaCor()">
+                            <input type="text" id="ipt_nome_usuario" placeholder="xX-F3L1P3-Xx" required>
                         </div>
 
                         <div class="nomes">
@@ -106,51 +105,45 @@
 </html>
 
 <script>
-    function cadastrar() {
-        var nomeUsuarioVar = ipt_nome_usuario.value
-        var nomeRealVar = ipt_nome_real.value
-        var emailVar = ipt_email.value
-        var senhaVar = ipt_senha.value
-        var historiaVar = ipt_historia.value
+function cadastrar() {
+    var nomeUsuarioVar = ipt_nome_usuario.value
+    var nomeRealVar = ipt_nome_real.value
+    var emailVar = ipt_email.value
+    var senhaVar = ipt_senha.value
+    var historiaVar = ipt_historia.value
 
-        if (
-            nomeUsuarioVar == "" ||
-            emailVar == "" ||
-            senhaVar == ""
-        ) {
-            alert("Os campos com * DEVEM serem preenchidos")
-        } else {
-            // Enviando o valores das inputs
-            fetch("/usuarios/cadastrar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    nomeUsuarioServer: nomeUsuarioVar,
-                    nomeRealServer: nomeRealVar,
-                    emailServer: emailVar,
-                    senhaServer: senhaVar,
-                    historiaServer: historiaVar
-                }),
+    if (
+        nomeUsuarioVar == "" ||
+        emailVar == "" ||
+        senhaVar == ""
+    ) {
+        alert("Os campos com * DEVEM serem preenchidos")
+    } else {
+        // Enviando os valores das inputs
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeUsuarioServer: nomeUsuarioVar,
+                nomeRealServer: nomeRealVar,
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                historiaServer: historiaVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("caiu aqui dentro: ", resposta);
+                if (resposta.ok) {
+                    alert("CADASTRO REALIZADO COM SUCESSO !");
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
             })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
-                    if (resposta.ok) {
-                        alert("CADASTRO REALIZADO COM SUCESSO !");
-                        setTimeout(() => {
-                            window.location = "login.html";
-                        }, "2000");
-                        limparFormulario();
-                        finalizarAguardar();
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                })
-                .catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                    finalizarAguardar();
-                });
-        }
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
     }
+}
 </script>
