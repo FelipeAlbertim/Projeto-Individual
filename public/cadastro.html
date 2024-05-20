@@ -81,7 +81,7 @@
 
                     <h3>Sua história:</h3>
                     <textarea maxlength="500" id="ipt_historia" placeholder="Escreva como você conheceu o valorant"
-                        style="font-family: 'Inter'; padding: 16px;"></textarea>
+                        style="font-family: 'Inter'; padding: 16px; color: white;"></textarea>
 
 
                     <button id="btn_cadastro" onclick="cadastrar()">Cadastre-se</button>
@@ -105,45 +105,51 @@
 </html>
 
 <script>
-function cadastrar() {
-    var nomeUsuarioVar = ipt_nome_usuario.value
-    var nomeRealVar = ipt_nome_real.value
-    var emailVar = ipt_email.value
-    var senhaVar = ipt_senha.value
-    var historiaVar = ipt_historia.value
+    function cadastrar() {
+        var nomeUsuarioVar = ipt_nome_usuario.value
+        var nomeRealVar = ipt_nome_real.value
+        var emailVar = ipt_email.value
+        var senhaVar = ipt_senha.value
+        var historiaVar = ipt_historia.value
 
-    if (
-        nomeUsuarioVar == "" ||
-        emailVar == "" ||
-        senhaVar == ""
-    ) {
-        alert("Os campos com * DEVEM serem preenchidos")
-    } else {
-        // Enviando os valores das inputs
-        fetch("/usuarios/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nomeUsuarioServer: nomeUsuarioVar,
-                nomeRealServer: nomeRealVar,
-                emailServer: emailVar,
-                senhaServer: senhaVar,
-                historiaServer: historiaVar
-            }),
-        })
-            .then(function (resposta) {
-                console.log("caiu aqui dentro: ", resposta);
-                if (resposta.ok) {
-                    alert("CADASTRO REALIZADO COM SUCESSO !");
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
+        if (
+            nomeUsuarioVar == "" ||
+            emailVar == "" ||
+            senhaVar == ""
+        ) {
+            alert("Os campos com * DEVEM serem preenchidos")
+        } else {
+            // Enviando os valores das inputs
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeUsuarioServer: nomeUsuarioVar,
+                    nomeRealServer: nomeRealVar,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar,
+                    historiaServer: historiaVar
+                }),
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
+                .then(function (resposta) {
+                    console.log("caiu aqui dentro: ", resposta);
+                    if (resposta.ok) {
+                        alert("CADASTRO REALIZADO COM SUCESSO !");
+                        ipt_nome_usuario.value  = ""
+                        ipt_nome_real.value  = ""
+                        ipt_email.value  = ""
+                        ipt_senha.value  = ""
+                        ipt_historia.value  = ""
+                        window.location.href = "login.html"
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+        }
     }
-}
 </script>
