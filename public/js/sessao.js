@@ -20,6 +20,7 @@ function limparSessao() {
 // carregamento (loading)
 function aguardar() {
     alert('CARREGANDO....')
+    
     // var divAguardar = document.getElementById("div_aguardar");
     // divAguardar.style.display = "flex";
 }

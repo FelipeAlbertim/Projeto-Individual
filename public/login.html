@@ -80,7 +80,6 @@
 
 
     function entrar() {
-        aguardar();
 
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
@@ -89,9 +88,10 @@
             alert('Os campos com * devem ser preenchidos')
             return false;
         }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
+        aguardar()
+        // else {
+        //     setInterval(sumirMensagem, 5000)
+        // }
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
@@ -114,14 +114,13 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    
                     sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
 
                     setTimeout(function () {
                         window.location = "index.html";
-                    }, 500);
+                    }, 1000); // apenas para exibir o loading
 
                 });
 
@@ -140,6 +139,10 @@
         })
 
         return false;
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
     }
 
 </script>
