@@ -4,6 +4,40 @@ body {
     background-color: #23303C;
     font-family: "Inter";
 }
+*{
+    margin: 0;
+    padding: 0;
+}
+@keyframes aument {
+
+    0%{
+        clip-path: circle(12.5% at 50% 50%);
+
+
+
+    } 
+    
+    100%{
+        clip-path: circle(100% at 50% 50%);
+        opacity: 100%;
+
+
+
+    } 
+    
+    
+
+    
+}
+@keyframes jump {
+    to{}
+    from{
+        transform: translateY(10px);
+        background-color: rgb(255, 0, 0);
+        box-shadow: 0px 0px 1000px #ff0015;
+        border: 2px solid #ffffff;
+    }
+}
 
 /*  ----------------------  navbar -----------------------------------*/
 
@@ -79,51 +113,173 @@ body {
 #quiz-container{
     display: flex;
     border: solid 5px; /* COM BORDA DE 5PX QUE VOU TROCAR POR PADDING */
-    width: 209.65vh;
+    width: 99.5%;
     height: 87.9vh;
     /* PERFEITO */
     align-items: flex-end;
     justify-content: end;
 }
 
-#quiz-container #top-jogadores{
-    height: 35%;
+#top-jogadores{
+
+    max-height: auto;
     width: 15%;
-    border: solid 5px blue;
+    display: flex;
+    font-size: 22px;
+    color: #fff;
+    background-color: #1d1d1d85;
+    border-radius: 10px;
     align-content: center;
     justify-content: center;
     position: absolute;
     bottom: 0;
     right: 0;
+    flex-direction: column;
+    list-style: none;
+    gap: 8px;
+    position: absolute;
+    top: 100px;
+    right: 10PX;
+    transform: translate(-50% 50%);
+    padding: 1rem;
+    margin: 20px 0px;
 }
-
+#top-jogadores li {
+    background-color: #4e4e4e80;
+    display: flex;
+    padding: 2px;
+    border-radius: 10px;
+    height: 45px;
+}
+#top-jogadores ul {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    gap: 8px;
+}
 #comecar{
     align-items: center;
     display: flex;
     flex-direction: column;
 }
+.img {
+    width: 100%;
+    height: 100%;
+    background-image: url(../assets/imgs/btn-start.png);
+    opacity: 0;
+}
+
 
 #btn-comecar {
     background-color: #FF4655;
-    border-color: black;
-    font-size: 20px;
+    border-color: white;
+    font-size: 35px;
     outline-color: white;
     height: 15vh;
-    width: 50vh;
-    border-radius: 20px;
+    width: 100vh;
+    border-radius: 5px;
     outline: none;
     font-family: "Inter";
     color:white;
     text-align: center;
-
-    /* background-image: url(../assets/imgs/btn-start.png); */
     background-color: #FF4655;
+    border: 2px solid #FF4655;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+   
 
 }
 
+.textQuiz {
+    font-size: 72px;
+    font-weight: 500;
+    transition: 0.5s;
+    
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    width: auto;
+    position: absolute;
+      
+      
+}
+.text{
+    font-size: 72px;
+    font-weight: 500;
+    transition: 0.5s;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: none;
+    border: 1px solid white;
+
+   
+      
+      
+}
+.subtitulo {
+   
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-size: 42px;
+  font-weight: 500;
+  width: 100%;
+
+
+}
+.subtitulo.vava {
+    font-size: 48px;
+  font-weight: 800;
+text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+    1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff; 
+    color: #23303C;
+
+
+
+}
+#btn-comecar:hover .img {
+    animation-name: aument;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    
+
+
+
+}
+#btn-comecar:hover {
+    animation-name: jump;
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    
+
+
+
+}
+#btn-comecar:hover p{
+    display: none;
+}
 #textos-comecar{
     color: white;
     font-size: 16px;
     align-items: center;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    flex-direction: column;
+    height: calc(100% - 4rem);
+    gap: 2rem;
 }

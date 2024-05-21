@@ -6,10 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant's Club | Quiz</title>
     <link rel="stylesheet" href="css/style-quiz.css">
+
+    <script src="./js/sessao.js"></script>
+
     <link rel="icon" href="assets/icon/icon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
 
@@ -29,7 +38,7 @@
                 <li> <a href="#conheca">Home</a> </li>
                 <li><a href="#agentes">Agentes</a></li>
                 <li><a href="#mapas">Mapas</a></li>
-                <li class="btn"><a href="#">Sair</a> </li>
+                <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()">Sair</li>
             </ul>
         </div>
     </div>
@@ -39,23 +48,55 @@
 
     <div id="quiz-container" style="align-items: center; justify-content: center;">
         <div id="comecar">
-            <button id="btn-comecar">Começar o desafio</button>
             <div id="textos-comecar">
-                <h2>Quanto Você Realmente Conhece o Valorant?</h2>
-                <h2>Está mesmo sabendo do jogo?</h2>
-                <h3>Descubra no Quiz acima !!</h3>
+                <div class="text">
+                <h2>Quanto Você Realmente Conhece o <span style="color: #FF4655;">Valorant?</span></h2>
+            </div>
+            <div class="subtitulo">
+                <p>O quanto você sabe de <div class="subtitulo vava">valorant</div></p>
+            </div>
+                <button id="btn-comecar"><p class="textQuiz">Jogar agora</p><div class="img"></div></button>
+              
             </div>
         </div>
 
         <div id="top-jogadores">
             <h2 style="font-size: 20px;">MELHORES JOGADORES</h2>
             <ul>
-                <li>[icon] Player 1</li>
-                <li>[icon] Player 2</li>
-                <li>[icon] Player 3</li>
+                <li>1° - Player 1</li>
+                <li>2° - Player 2</li>
+                <li>3° - Player 3</li>
+            </ul>
+            <h2 style="font-size: 20px;">PIORES JOGADORES</h2>
+            <ul>
+                <li>1° - Player 1</li>
+                <li>2° - Player 2</li>
+                <li>3° - Player 3</li>
             </ul>
         </div>
     </div>
 </body>
 
 </html>
+
+<script>  
+
+    function sumirBotaoSair() {
+        document.getElementById('btn_login').style.display = 'block';
+        document.getElementById('btn_cadastro').style.display = 'block';
+    }
+
+    function aparecerBotaoSair() {
+                document.getElementById('btn_sair').style.display = 'block';
+    }
+
+    if (sessionStorage.EMAIL_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined &&
+
+    sessionStorage.NOME_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined
+    ) {
+        sumirBotaoSair()       
+    }
+    else {
+        aparecerBotaoSair ()
+    }
+</script>
