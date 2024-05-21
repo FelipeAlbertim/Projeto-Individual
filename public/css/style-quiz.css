@@ -188,25 +188,20 @@ body {
     border: 2px solid #FF4655;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-   
-
+    justify-content: center; 
 }
 
 .textQuiz {
     font-size: 72px;
     font-weight: 500;
-    transition: 0.5s;
-    
+    transition: 0.5s;    
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
     font-style: normal;
     width: auto;
-    position: absolute;
-      
-      
+    position: absolute;     
 }
+
 .text{
     font-size: 72px;
     font-weight: 500;
@@ -214,20 +209,15 @@ body {
     padding: 2rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: center;    
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
     font-style: normal;
     color: none;
     border: 1px solid white;
-
-   
-      
-      
 }
-.subtitulo {
-   
+
+.subtitulo {   
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: weight;
@@ -235,14 +225,13 @@ body {
   font-size: 42px;
   font-weight: 500;
   width: 100%;
-
-
 }
+
 .subtitulo.vava {
-    font-size: 48px;
-  font-weight: 800;
+font-size: 48px;
+font-weight: 800;
 text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
-    1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff; 
+  1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff; 
     color: #23303C;
 
 
@@ -252,10 +241,6 @@ text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
     animation-name: aument;
     animation-duration: 1s;
     animation-fill-mode: forwards;
-    
-
-
-
 }
 #btn-comecar:hover {
     animation-name: jump;
@@ -263,14 +248,12 @@ text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
     animation-direction: alternate;
-    
-
-
-
 }
+
 #btn-comecar:hover p{
     display: none;
 }
+
 #textos-comecar{
     color: white;
     font-size: 16px;

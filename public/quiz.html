@@ -14,11 +14,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 
@@ -35,28 +36,34 @@
 
         <div id="menu">
             <ul>
-                <li> <a href="#conheca">Home</a> </li>
-                <li><a href="#agentes">Agentes</a></li>
-                <li><a href="#mapas">Mapas</a></li>
+                <li> <a href="index.html">Home</a> </li>
+                <li><a href="index.html#agentes">Agentes</a></li>
+                <li><a href="index.html#mapas">Mapas</a></li>
+                <li class="btn" id="btn_cadastro" style="display: none;"><a href="cadastro.html">Cadastre-se</a> </li>
+                <li class="btn" id="btn_login" style="display: none;"><a href="login.html">Login</a> </li>
                 <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()">Sair</li>
             </ul>
         </div>
     </div>
 
-    <!--        INICIO DO QUIZ          -->
-
+    <!-- INICIO DO QUIZ -->
 
     <div id="quiz-container" style="align-items: center; justify-content: center;">
         <div id="comecar">
             <div id="textos-comecar">
                 <div class="text">
-                <h2>Quanto Você Realmente Conhece o <span style="color: #FF4655;">Valorant?</span></h2>
-            </div>
-            <div class="subtitulo">
-                <p>O quanto você sabe de <div class="subtitulo vava">valorant</div></p>
-            </div>
-                <button id="btn-comecar"><p class="textQuiz">Jogar agora</p><div class="img"></div></button>
-              
+                    <h2>Quanto Você Realmente Conhece o <span style="color: #FF4655;">Valorant ?</span></h2>
+                </div>
+                <div class="subtitulo">
+                    <p>O quanto você sabe de
+                    <div class="subtitulo vava">valorant</div>
+                    </p>
+                </div>
+                <button id="btn-comecar">
+                    <p class="textQuiz">Jogar agora</p>
+                    <div class="img"></div>
+                </button>
+
             </div>
         </div>
 
@@ -69,34 +76,33 @@
             </ul>
             <h2 style="font-size: 20px;">PIORES JOGADORES</h2>
             <ul>
-                <li>1° - Player 1</li>
-                <li>2° - Player 2</li>
-                <li>3° - Player 3</li>
+                <li>30° - Player </li>
+                <li>29° - Player </li>
+                <li>28° - Player </li>
             </ul>
         </div>
     </div>
+
+    <script>
+        function aparecerBotaoCadastro(){
+            document.getElementById('btn_cadastro').style.display = 'block';
+            document.getElementById('btn_login').style.display = 'block';
+        }
+
+        function aparecerBotaoSair() {
+            document.getElementById('btn_sair').style.display = 'block';
+        }
+
+        function sumirBotaoSair() {
+            document.getElementById('btn_sair').style.display = 'none';
+        }
+
+        if (sessionStorage.EMAIL_USUARIO == null && sessionStorage.NOME_USUARIO == null) {
+            aparecerBotaoCadastro();
+        } else {
+            aparecerBotaoSair();
+        }
+    </script>
 </body>
 
 </html>
-
-<script>  
-
-    function sumirBotaoSair() {
-        document.getElementById('btn_login').style.display = 'block';
-        document.getElementById('btn_cadastro').style.display = 'block';
-    }
-
-    function aparecerBotaoSair() {
-                document.getElementById('btn_sair').style.display = 'block';
-    }
-
-    if (sessionStorage.EMAIL_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined &&
-
-    sessionStorage.NOME_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined
-    ) {
-        sumirBotaoSair()       
-    }
-    else {
-        aparecerBotaoSair ()
-    }
-</script>
