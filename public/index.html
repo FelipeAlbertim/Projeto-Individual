@@ -34,10 +34,9 @@
                 <li><a href="#agentes">Agentes</a></li>
                 <li><a href="#mapas">Mapas</a></li>
                 <li><a href="#quiz">Quiz</a></li>
-                <li class="btn" id="btn_login"><a href="login.html">Login</a> </li>
-                <li class="btn" id="btn_cadastro"><a href="cadastro.html">Cadastre-se</a> </li>
-                <li class="btn" id="btn_sair" onclick="limparSessao()" style="display: none;">Sair</li>
-
+                <li class="btn" id="btn_login" style="display: none;"><a href="login.html">Login</a> </li>
+                <li class="btn" id="btn_cadastro" style="display: none;"><a href="cadastro.html">Cadastre-se</a> </li>
+                <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()" >Sair</li>
             </ul>
         </div>
     </div>
@@ -133,26 +132,24 @@
 
 </html>
 
-<script>
-    function aparecerBotaoSair() {
-        document.getElementById('btn_login').style.display = 'none';
-        document.getElementById('btn_cadastro').style.display = 'none';
-
-        document.getElementById('btn_sair').style.display = 'block';
-    }
+<script>  
 
     function sumirBotaoSair() {
-        document.getElementById('btn_login').style.display = 'blick';
+        document.getElementById('btn_login').style.display = 'block';
         document.getElementById('btn_cadastro').style.display = 'block';
-
-        document.getElementById('btn_sair').style.display = 'none';
     }
 
-    if (
-        sessionStorage.EMAIL_USUARIO != null || sessionStorage.EMAIL_USUARIO != "" || sessionStorage.EMAIL_USUARIO != undefined &&
-        sessionStorage.NOME_USUARIO != null || sessionStorage.EMAIL_USUARIO != "" || sessionStorage.EMAIL_USUARIO != undefined
-    ) {botaoSair()}
+    function aparecerBotaoSair() {
+                document.getElementById('btn_sair').style.display = 'block';
+    }
+
+    if (sessionStorage.EMAIL_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined &&
+
+    sessionStorage.NOME_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined
+    ) {
+        sumirBotaoSair()       
+    }
     else {
-        sumirBotaoSair()
+        aparecerBotaoSair ()
     }
 </script>
