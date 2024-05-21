@@ -1,13 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
 
-
-// function botaoSair() {
-//     document.getElementById('btn_login').style.display = 'none';
-//     document.getElementById('btn_cadastro').style.display = 'none';
-
-//     document.getElementById('btn_sair').style.display = 'block';
-// }
-
 function autenticar(req, res) {
     console.log('chegou no autenticar')
     var email = req.body.emailServer;

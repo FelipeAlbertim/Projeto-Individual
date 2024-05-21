@@ -27,7 +27,7 @@
                 <img src="assets/icon/valorant.png">
             </div>
         </div>
-        
+
         <div id="menu">
             <ul>
                 <li> <a href="#conheca">Home</a> </li>
@@ -36,10 +36,10 @@
                 <li><a href="#quiz">Quiz</a></li>
                 <li class="btn" id="btn_login"><a href="login.html">Login</a> </li>
                 <li class="btn" id="btn_cadastro"><a href="cadastro.html">Cadastre-se</a> </li>
-                <li class="btn" id="btn_cadastro" onclick="limparSessao()" style="display: none;">Sair</li>
+                <li class="btn" id="btn_sair" onclick="limparSessao()" style="display: none;">Sair</li>
 
             </ul>
-        </div>  
+        </div>
     </div>
 
     <!-- TÉRMINO DA NAVBAR -->
@@ -97,7 +97,8 @@
 
 
             <div id="botao_quiz">
-                <button><a href="quiz.html" style="text-decoration: none; color: white; font-size: 16px;">Clique Aqui!</a> </button>
+                <button><a href="quiz.html" style="text-decoration: none; color: white; font-size: 16px;">Clique
+                        Aqui!</a> </button>
             </div>
 
         </div>
@@ -110,12 +111,16 @@
         </div>
         <div class="conteudo">
             <div class="video">
-                <iframe src="https://www.youtube.com/embed/e_E9W2vsRbQ?autoplay=1&loop=1" frameborder="0" width="800px" height="500px"></iframe>
+                <iframe src="https://www.youtube.com/embed/e_E9W2vsRbQ?autoplay=1&loop=1" frameborder="0" width="800px"
+                    height="500px"></iframe>
             </div>
             <div class="texto">
                 <h1 style="color: #FF4655;font-size: 35px;text-align: center;">Vídeo de Demonstração</h1>
                 <p style="color: white;font-size: 24px;">
-                    Lançado em 2020, Valorant é um jogo de tiro online e multiplayer no qual dois grupos com cinco jogadores se enfrentam nos diversos mapas de Valorant, inspirados em locais do mundo real. Dependendo do mapa disputado, cada lado da disputa deverá alcançar um objetivo determinado ou impedir o outro lado de conseguir conquistar essa meta.
+                    Lançado em 2020, Valorant é um jogo de tiro online e multiplayer no qual dois grupos com cinco
+                    jogadores se enfrentam nos diversos mapas de Valorant, inspirados em locais do mundo real.
+                    Dependendo do mapa disputado, cada lado da disputa deverá alcançar um objetivo determinado ou
+                    impedir o outro lado de conseguir conquistar essa meta.
                 </p>
             </div>
         </div>
@@ -125,4 +130,29 @@
     </section>
 
 </body>
+
 </html>
+
+<script>
+    function aparecerBotaoSair() {
+        document.getElementById('btn_login').style.display = 'none';
+        document.getElementById('btn_cadastro').style.display = 'none';
+
+        document.getElementById('btn_sair').style.display = 'block';
+    }
+
+    function sumirBotaoSair() {
+        document.getElementById('btn_login').style.display = 'blick';
+        document.getElementById('btn_cadastro').style.display = 'block';
+
+        document.getElementById('btn_sair').style.display = 'none';
+    }
+
+    if (
+        sessionStorage.EMAIL_USUARIO != null || sessionStorage.EMAIL_USUARIO != "" || sessionStorage.EMAIL_USUARIO != undefined &&
+        sessionStorage.NOME_USUARIO != null || sessionStorage.EMAIL_USUARIO != "" || sessionStorage.EMAIL_USUARIO != undefined
+    ) {botaoSair()}
+    else {
+        sumirBotaoSair()
+    }
+</script>
