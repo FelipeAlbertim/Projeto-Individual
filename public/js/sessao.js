@@ -12,6 +12,7 @@ function validarSessao() {
     }
 }
 
+
 function limparSessao() {
     sessionStorage.clear();
     window.location = "../login.html";
@@ -32,4 +33,3 @@ function finalizarAguardar(texto) {
         alert(`Erro: ${texto}`)
     }
 }
-

@@ -1,5 +1,12 @@
 var usuarioModel = require("../models/usuarioModel");
-// var aquarioModel = require("../models/aquarioModel");
+
+
+// function botaoSair() {
+//     document.getElementById('btn_login').style.display = 'none';
+//     document.getElementById('btn_cadastro').style.display = 'none';
+
+//     document.getElementById('btn_sair').style.display = 'block';
+// }
 
 function autenticar(req, res) {
     console.log('chegou no autenticar')
@@ -21,12 +28,12 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                                    res.json({
-                                        idUsuario:resultadoAutenticar[0].idUsuario,
-                                        email: resultadoAutenticar[0].email,
-                                        nome:  resultadoAutenticar[0].nome                                        
-                                    });
-                           
+                        res.json({
+                            idUsuario: resultadoAutenticar[0].idUsuario,
+                            email: resultadoAutenticar[0].email,
+                            nome: resultadoAutenticar[0].nome
+                        });
+
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -40,6 +47,7 @@ function autenticar(req, res) {
                     res.status(500).json(erro.sqlMessage);
                 }
             );
+        // botaoSair();
     }
 
 }
