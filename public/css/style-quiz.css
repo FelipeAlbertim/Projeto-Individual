@@ -9,26 +9,15 @@ body {
     padding: 0;
 }
 @keyframes aument {
-
     0%{
         clip-path: circle(12.5% at 50% 50%);
-
-
-
-    } 
-    
+    }        
     100%{
         clip-path: circle(100% at 50% 50%);
         opacity: 100%;
-
-
-
-    } 
-    
-    
-
-    
+    }   
 }
+
 @keyframes jump {
     to{}
     from{
@@ -189,6 +178,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center; 
+    cursor: pointer;
 }
 
 .textQuiz {
@@ -204,6 +194,7 @@ body {
 
 .text{
     font-size: 72px;
+    width: 80%;
     font-weight: 500;
     transition: 0.5s;
     padding: 2rem;
