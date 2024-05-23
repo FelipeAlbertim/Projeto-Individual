@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant's Club | Quiz</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="icon" href="assets/icon/icon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/style-questionario.css">
+
+
+</head>
+
+<body>
+    <div id="nav_bar">
+        <div id="logo">
+            <div id="foto">
+                <img src="assets/icon/logo.png">
+            </div>
+            <div id="valorant">
+                <img src="assets/icon/valorant.png">
+            </div>
+        </div>
+
+        <div id="menu">
+            <ul>
+                <li> <a href="index.html">Home</a> </li>
+                <li><a href="index.html#agentes">Agentes</a></li>
+                <li><a href="index.html#mapas">Mapas</a></li>
+                <li class="btn" id="btn_cadastro" style="display: none;"><a href="cadastro.html">Cadastre-se</a> </li>
+                <li class="btn" id="btn_login" style="display: none;"><a href="login.html">Login</a> </li>
+                <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()">Sair</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FINAL NAV BAR -->
+
+
+    <div class="container">
+        <div class="introducao">
+            <div class="textoIntrodutorio">
+                <h1 class="textoCentralizado"> Olá, <span id="span_nome"></span> </h1>
+
+                <h2 style="padding-bottom: 20px;"> Como funciona o quiz:</h2>
+
+                <ul>
+                    <li>O quiz tem 10 perguntas de múltipla escolha, todas sobre Valorant, é claro!</li>
+                    <li>Escolha a resposta que você acha certa. Não se preocupe, ninguém vai julgar se você errar.</li>
+                    <li>Você tem 2 minutos para responder todas as perguntas, mas sem estresse, ok?</li>
+                    <li>Responda todas as perguntas antes que o tempo acabe. Se não der tempo, o quiz vai encerrar sozinho.</li>
+                    <li>Sua pontuação e seu elo será baseada no número de respostas corretas.</li>
+                    <li>Se empatar com alguém, quem terminar mais rápido ganha mais pontos!</li>
+                    <li>O resultado aparece na hora. Será que você é um verdadeiro mestre de Valorant?</li>
+                    <li>Divirta-se e jogue!</li>
+            </div>            
+            <button id="start">Começar</button>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script>
+    span_nome.innerHTML += `${sessionStorage.NOME_USUARIO} !`
+    function aparecerBotaoCadastro() {
+        document.getElementById('btn_cadastro').style.display = 'block';
+        document.getElementById('btn_login').style.display = 'block';
+    }
+
+    function aparecerBotaoSair() {
+        document.getElementById('btn_sair').style.display = 'block';
+    }
+
+    function sumirBotaoSair() {
+        document.getElementById('btn_sair').style.display = 'none';
+    }
+
+    if (sessionStorage.EMAIL_USUARIO == null && sessionStorage.NOME_USUARIO == null) {
+        aparecerBotaoCadastro();
+    } else {
+        aparecerBotaoSair();
+    }
+</script>

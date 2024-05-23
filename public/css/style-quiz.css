@@ -101,7 +101,6 @@ body {
 
 #quiz-container{
     display: flex;
-    border: solid 5px; /* COM BORDA DE 5PX QUE VOU TROCAR POR PADDING */
     width: 99.5%;
     height: 87.9vh;
     /* PERFEITO */
@@ -110,8 +109,7 @@ body {
 }
 
 #top-jogadores{
-
-    max-height: auto;
+    height:55vh;
     width: 15%;
     display: flex;
     font-size: 22px;
@@ -205,7 +203,6 @@ body {
     font-weight: 400;
     font-style: normal;
     color: none;
-    border: 1px solid white;
 }
 
 .subtitulo {   
