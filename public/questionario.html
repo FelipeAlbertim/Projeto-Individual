@@ -40,9 +40,7 @@
                 <li> <a href="index.html">Home</a> </li>
                 <li><a href="index.html#agentes">Agentes</a></li>
                 <li><a href="index.html#mapas">Mapas</a></li>
-                <li class="btn" id="btn_cadastro" style="display: none;"><a href="cadastro.html">Cadastre-se</a> </li>
-                <li class="btn" id="btn_login" style="display: none;"><a href="login.html">Login</a> </li>
-                <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()">Sair</li>
+                <li class="btn" id="btn_sair" onclick="limparSessao()">Sair</li>
             </ul>
         </div>
     </div>
@@ -51,13 +49,16 @@
 
 
     <div class="container">
-        <div class="introducao">
+
+        <!-- TEXTO INTRODUTORIO -->
+
+        <div id="introducao">
             <div class="textoIntrodutorio">
                 <h1 class="textoCentralizado"> Olá, <span id="span_nome"></span> </h1>
 
                 <h2 style="padding-bottom: 20px;"> Como funciona o quiz:</h2>
-
-                <ul>
+                
+                <ol>
                     <li>O quiz tem 10 perguntas de múltipla escolha, todas sobre Valorant, é claro!</li>
                     <li>Escolha a resposta que você acha certa. Não se preocupe, ninguém vai julgar se você errar.</li>
                     <li>Você tem 2 minutos para responder todas as perguntas, mas sem estresse, ok?</li>
@@ -66,9 +67,28 @@
                     <li>Se empatar com alguém, quem terminar mais rápido ganha mais pontos!</li>
                     <li>O resultado aparece na hora. Será que você é um verdadeiro mestre de Valorant?</li>
                     <li>Divirta-se e jogue!</li>
+                </ol>
             </div>            
-            <button id="start">Começar</button>
+            <button id="start" onclick="escondeIntrucao()">Começar</button>
         </div>
+
+        <!-- PERGUNTAS -->
+
+        <div id="questao" style="display: none;">
+            <span id="pergunta">
+                <h1>Lorem ipsum dolor sit amet.</h1>
+            </span>
+
+            <div class="respostas">
+                <span class="resposta">Lorem, ipsum.</span>
+                <span class="resposta">Lorem, ipsum.</span>
+                <span class="resposta">Lorem, ipsum.</span>
+                <span class="resposta">Lorem, ipsum.</span>
+            </div>
+
+            <button id="proxima_pergunta">Proxima Pergunta !</button>
+        </div>
+
     </div>
 
 
@@ -78,23 +98,14 @@
 </html>
 
 <script>
-    span_nome.innerHTML += `${sessionStorage.NOME_USUARIO} !`
-    function aparecerBotaoCadastro() {
-        document.getElementById('btn_cadastro').style.display = 'block';
-        document.getElementById('btn_login').style.display = 'block';
+    var nome_usuario = sessionStorage.NOME_USUARIO;
+    var email_usuario = sessionStorage.EMAIL_USUARIO;
+
+    span_nome.innerHTML += `${nome_usuario} !`
+
+    function escondeIntrucao() {
+        document.getElementById("introducao").style.display = 'none';
+        document.getElementById("questao").style.display = 'block';
     }
 
-    function aparecerBotaoSair() {
-        document.getElementById('btn_sair').style.display = 'block';
-    }
-
-    function sumirBotaoSair() {
-        document.getElementById('btn_sair').style.display = 'none';
-    }
-
-    if (sessionStorage.EMAIL_USUARIO == null && sessionStorage.NOME_USUARIO == null) {
-        aparecerBotaoCadastro();
-    } else {
-        aparecerBotaoSair();
-    }
 </script>

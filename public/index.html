@@ -36,7 +36,7 @@
                 <li><a href="#quiz">Quiz</a></li>
                 <li class="btn" id="btn_login" style="display: none;"><a href="login.html">Login</a> </li>
                 <li class="btn" id="btn_cadastro" style="display: none;"><a href="cadastro.html">Cadastre-se</a> </li>
-                <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()" >Sair</li>
+                <li class="btn" id="btn_sair" style="display: none;" onclick="limparSessao()">Sair</li>
             </ul>
         </div>
     </div>
@@ -96,8 +96,9 @@
 
 
             <div id="botao_quiz">
-                <button><a href="quiz.html" style="text-decoration: none; color: white; font-size: 16px;">Clique
-                        Aqui!</a> </button>
+                <a href="quiz.html" style="text-decoration: none; color: white; font-size: 16px;">
+                    <button>Clique Aqui!</button>
+                </a>
             </div>
 
         </div>
@@ -132,7 +133,7 @@
 
 </html>
 
-<script>  
+<script>
 
     function sumirBotaoSair() {
         document.getElementById('btn_login').style.display = 'block';
@@ -140,16 +141,16 @@
     }
 
     function aparecerBotaoSair() {
-                document.getElementById('btn_sair').style.display = 'block';
+        document.getElementById('btn_sair').style.display = 'block';
     }
 
     if (sessionStorage.EMAIL_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined &&
 
-    sessionStorage.NOME_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined
+        sessionStorage.NOME_USUARIO == null || sessionStorage.EMAIL_USUARIO == "" || sessionStorage.EMAIL_USUARIO == undefined
     ) {
-        sumirBotaoSair()       
+        sumirBotaoSair()
     }
     else {
-        aparecerBotaoSair ()
+        aparecerBotaoSair()
     }
 </script>
