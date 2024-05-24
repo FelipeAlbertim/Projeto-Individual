@@ -45,7 +45,7 @@ insert into resposta (fkPergunta,textoResposta,correta) values
 (1,'1859',false),
 (1,'1503',false),
 (1,'1968',false),
-(1,'2021',false);
+(1,'2021',true);
 
 create table ranking(
 fkQuiz int,
