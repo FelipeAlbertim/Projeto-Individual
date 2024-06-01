@@ -20,6 +20,25 @@ function listarPergunta(req, res) {
         } else {
             res.status(204).send("Nenhum resultado encontrado!");
         }
+        
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function listarResposta(req, res) {
+    var perguntaAtual = req.params.perguntaAtual;
+    avisoModel.listarResposta(perguntaAtual).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+
+
+
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
@@ -141,6 +160,7 @@ function deletar(req, res) {
 
 module.exports = {
     listarPergunta,
+    listarResposta,
     listarPorUsuario,
     pesquisarDescricao,
     publicar,

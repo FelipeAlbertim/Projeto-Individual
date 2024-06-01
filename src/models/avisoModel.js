@@ -1,30 +1,24 @@
 var database = require("../database/config");
 
-// function listar() {
-//     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
-//     var instrucaoSql = `
-//         SELECT 
-//             a.id AS idAviso,
-//             a.titulo,
-//             a.descricao,
-//             a.fk_usuario,
-//             u.id AS idUsuario,
-//             u.nome,
-//             u.email,
-//             u.senha
-//         FROM aviso a
-//             INNER JOIN usuario u
-//                 ON a.fk_usuario = u.id;
-//     `;
-//     console.log("Executando a instrução SQL: \n" + instrucaoSql);
-//     return database.executar(instrucaoSql);
-// }
 function listarPergunta() {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     var instrucaoSql = `
     select idPergunta as id,
 	textoPergunta 
     from pergunta;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function listarResposta(perguntaAtual) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarResposta()", perguntaAtual);
+    var instrucaoSql = `
+    select  textoResposta,correta from resposta 
+    join pergunta on fkPergunta = idPergunta
+    where idPergunta = ${perguntaAtual}
+    order by idPergunta
+    ;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -106,5 +100,6 @@ module.exports = {
     publicar,
     editar,
     deletar,
-    listarPergunta
+    listarPergunta,
+    listarResposta
 }

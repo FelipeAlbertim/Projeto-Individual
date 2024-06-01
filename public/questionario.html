@@ -81,10 +81,10 @@
             </span>
 
             <div class="respostas">
-                <span class="resposta">Lorem, ipsum.</span>
-                <span class="resposta">Lorem, ipsum.</span>
-                <span class="resposta">Lorem, ipsum.</span>
-                <span class="resposta">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_1">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_2">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_3">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_4">Lorem, ipsum.</span>
             </div>
 
             <button id="proxima_pergunta" onclick="atualizarPergunta()">Proxima Pergunta !</button>
@@ -129,9 +129,11 @@
     // no final de tudo comparar com o banco 
 
     // }
+
     var perguntaAtual = 0
 
     function atualizarPergunta() {
+        atualizarResposta()
         fetch("/avisos/listarPergunta").then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) {
@@ -141,11 +143,9 @@
                 resposta.json().then(function (resposta) {
                     console.log("Dados recebidos: ", JSON.stringify(resposta));
 
-
-                    // for (let i = 0; i < resposta.length; i++) {
                     var textoPergunta = resposta[perguntaAtual];
                     pergunta.innerHTML = `${perguntaAtual + 1}. ${textoPergunta.textoPergunta}`;
-                    // }
+
                     perguntaAtual++
                 });
             } else {
@@ -153,7 +153,39 @@
             }
         }).catch(function (resposta) {
             console.error(resposta);
-            // finalizarAguardar();
         });
+
+
+
+
+        function atualizarResposta() {
+            fetch(`/avisos/listarResposta/${perguntaAtual + 1}`).then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        throw "Nenhum resultado encontrado!!";
+                    }
+
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+
+
+                        for (var i = 0; i < resposta.length; i++) {
+                            var textoResposta = resposta[i].textoResposta;
+                            var box_resposta_id = `Resposta_${i + 1}`;
+                            var box_resposta = document.getElementById(box_resposta_id);
+
+                            box_resposta.innerHTML = textoResposta;
+
+                        }
+
+                    });
+                } else {
+                    throw ('Houve um erro na API!');
+                }
+            }).catch(function (resposta) {
+                console.error(resposta);
+            });
+        }
     }
 </script>
