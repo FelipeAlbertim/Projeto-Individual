@@ -7,21 +7,23 @@
     <title>Valorant's Club | Quiz</title>
 
     <script src="./js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gaugeJS"></script>
+
+
 
     <link rel="icon" href="assets/icon/icon.jpg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./css/style-questionario.css">
-
-
+    <style>
+        canvas {
+            width: 400px !important;
+            height: 400px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,7 +39,7 @@
 
         <div id="menu">
             <ul>
-                <li> <a href="index.html">Home</a> </li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#agentes">Agentes</a></li>
                 <li><a href="index.html#mapas">Mapas</a></li>
                 <li class="btn" id="btn_sair" onclick="limparSessao()">Sair</li>
@@ -45,19 +47,11 @@
         </div>
     </div>
 
-    <!-- FINAL NAV BAR -->
-
-
     <div class="container">
-
-        <!-- TEXTO INTRODUTORIO -->
-
-        <div id="introducao">
+        <div id="introducao" style="display: block;">
             <div class="textoIntrodutorio">
                 <h1 class="textoCentralizado"> Olá, <span id="span_nome"></span> </h1>
-
                 <h2 style="padding-bottom: 20px;"> Como funciona o quiz:</h2>
-
                 <ol>
                     <li>O quiz tem 10 perguntas de múltipla escolha, todas sobre Valorant, é claro!</li>
                     <li>Escolha a resposta que você acha certa. Não se preocupe, ninguém vai julgar se você errar.</li>
@@ -73,112 +67,134 @@
             <button id="start" onclick="escondeIntrucao(), atualizarPergunta()">Começar</button>
         </div>
 
-        <!-- PERGUNTAS -->
-
         <div id="questao" style="display: none;">
             <span>
                 <h1 id="pergunta">Lorem ipsum dolor sit amet.</h1>
             </span>
-
             <div class="respostas">
-                <span class="resposta" id="Resposta_1">Lorem, ipsum.</span>
-                <span class="resposta" id="Resposta_2">Lorem, ipsum.</span>
-                <span class="resposta" id="Resposta_3">Lorem, ipsum.</span>
-                <span class="resposta" id="Resposta_4">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_1" onclick="selecionarResposta(1)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_2" onclick="selecionarResposta(2)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_3" onclick="selecionarResposta(3)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_4" onclick="selecionarResposta(4)">Lorem, ipsum.</span>
             </div>
-
-            <button id="proxima_pergunta" onclick="atualizarPergunta()">Proxima Pergunta !</button>
+            <button id="proxima_pergunta" onclick="confirmarResposta()">Próxima Pergunta !</button>
         </div>
 
+        <div id="fim" style="display: none;">
+            <div id="graficos">
+                <div id="tempo" class="dash">
+                    <h1 style="color: white;">Tempo (Segundos)</h1>
+                    <p style="color: white;"> Tempo de prova -> <span id="spanSegundos">00:00</span>s</p>
+                    <div>
+                        <canvas id="dash_tempo"></canvas>
+                    </div>
+                </div>
+                <div id="acertos" class="dash">
+                    <h1 style="color: white;">Acertos</h1>
+                    <p style="color: white;"> Acertos -> <span id="spanAcertos"></span></p>
+                    <div>
+                        <canvas id="dash_acertos"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div id="botao">
+                <button>PRÓXIMO DASH</button>
+            </div>
+        </div>
     </div>
 
+    <script>
+        var nome_usuario = sessionStorage.NOME_USUARIO;
+        var email_usuario = sessionStorage.EMAIL_USUARIO;
+        var perguntaAtual = 0;
+        var respostaSelecionada = null;
+        var textoRespostaSelecionada = null;
+        var textoRespostaCorreta = ""
+        var counter;
+        var tempoSegundos = 0
+        var fazendoQuiz = false
+        var acertos = 0
+        var totalPerguntas = 0
 
+        span_nome.innerHTML += `${nome_usuario} !`;
 
-</body>
-
-</html>
-
-
-
-<script>
-    var nome_usuario = sessionStorage.NOME_USUARIO;
-    var email_usuario = sessionStorage.EMAIL_USUARIO;
-
-    span_nome.innerHTML += `${nome_usuario} !`
-
-    function escondeIntrucao() {
-        document.getElementById("introducao").style.display = 'none';
-        document.getElementById("questao").style.display = 'block';
-    }
-
-
-
-
-    //    function listar(){
-    // fazer uma função para buscar a pergunta atual (0)
-
-    // fazer uma função para buscar as possiveis respostas dessa pergunta
-
-    // comparar se a resposta que ele assinalou esta de acordo com a correta ou nao 
-
-    // if(respostaUsuario == respostaCorreta){
-    // acertos++
-    // }       
-
-
-    // no final de tudo comparar com o banco 
-
-    // }
-
-    var perguntaAtual = 0
-
-    function atualizarPergunta() {
-        atualizarResposta()
-        fetch("/avisos/listarPergunta").then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.status == 204) {
-                    throw "Nenhum resultado encontrado!!";
-                }
-
-                resposta.json().then(function (resposta) {
-                    console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                    var textoPergunta = resposta[perguntaAtual];
-                    pergunta.innerHTML = `${perguntaAtual + 1}. ${textoPergunta.textoPergunta}`;
-
-                    perguntaAtual++
-                });
-            } else {
-                throw ('Houve um erro na API!');
+        function escondeIntrucao() {
+            introducao.style.display = 'none';
+            questao.style.display = 'block';
+            if (fazendoQuiz = true) {
+                counter = setInterval(tempo, 1000)
             }
-        }).catch(function (resposta) {
-            console.error(resposta);
-        });
 
+            function tempo() {
+                tempoSegundos++
+            }
+        }
 
+        function selecionarResposta(respostaId) {
+            respostaSelecionada = respostaId;
+            textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
+            document.querySelectorAll('.resposta').forEach(element => {
+                element.style.backgroundColor = ''; // Reset background color for all
+            });
+            document.getElementById(`Resposta_${respostaId}`).style.backgroundColor = 'lightblue'; // Highlight selected
+        }
 
-
-        function atualizarResposta() {
-            fetch(`/avisos/listarResposta/${perguntaAtual + 1}`).then(function (resposta) {
+        function atualizarPergunta() {
+            fazendoQuiz = true
+            fetch("/avisos/listarPergunta").then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.status == 204) {
                         throw "Nenhum resultado encontrado!!";
                     }
-
                     resposta.json().then(function (resposta) {
-                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        totalPerguntas = resposta.length
+                        var textoPergunta = resposta[perguntaAtual];
+                        if (textoPergunta && textoPergunta.textoPergunta) {
+                            pergunta.innerHTML = `${perguntaAtual + 1}. ${textoPergunta.textoPergunta}`;
+                            perguntaAtual++;
+                            atualizarResposta();
+                        } else {
+                            // TERMINOU O QUIZ
+                            fazendoQuiz = false
+                            clearInterval(counter); // Stop the timer
+                            questao.style.display = "none"
+                            fim.style.display = "flex"
+                            spanSegundos.innerHTML = tempoSegundos
+                            spanAcertos.innerHTML = acertos
+                            spanAcertos.innerHTML += ` / ${totalPerguntas}`
+                            imprimirGraficos(); // Chama a função para imprimir os gráficos
+                        }
+                    });
+                } else {
+                    throw ('Houve um erro na API!');
+                }
+            }).catch(function (erro) {
+                console.error(erro);
+            });
+        }
 
-
-
+        function atualizarResposta() {
+            fazendoQuiz = true
+            fetch(`/avisos/listarResposta/${perguntaAtual}`).then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        throw "Nenhum resultado encontrado!!";
+                    }
+                    totalPerguntas = resposta.length
+                    resposta.json().then(function (resposta) {
                         for (var i = 0; i < resposta.length; i++) {
                             var textoResposta = resposta[i].textoResposta;
                             var box_resposta_id = `Resposta_${i + 1}`;
                             var box_resposta = document.getElementById(box_resposta_id);
-
                             box_resposta.innerHTML = textoResposta;
+                            box_resposta.style.backgroundColor = ''; // Reset background color for new answers
 
+                            if (resposta[i].correta == true) {
+                                textoRespostaCorreta = textoResposta
+                            }
                         }
-
+                        respostaSelecionada = null; // Reset selected answer
+                        textoRespostaSelecionada = null; // Reset selected answer text
                     });
                 } else {
                     throw ('Houve um erro na API!');
@@ -187,5 +203,152 @@
                 console.error(resposta);
             });
         }
-    }
-</script>
+
+        function confirmarResposta() {
+            fazendoQuiz = true
+            if (respostaSelecionada == null) {
+                alert("Por favor, selecione uma resposta.");
+            } else {
+                if (textoRespostaSelecionada == textoRespostaCorreta) {
+                    acertos++
+                }
+                // Process the selected answer
+                console.log(`Resposta selecionada para a pergunta ${perguntaAtual}: ${textoRespostaSelecionada}`);
+                console.log(`Quantidade acertos: ${acertos}`);
+                atualizarPergunta();
+            }
+        }
+
+        function imprimirGraficos() {
+    var ctx = document.getElementById('dash_acertos')
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Acertos', 'Total Perguntas'],
+            datasets: [{
+                label: 'Acertos',
+                data: [totalPerguntas - acertos, acertos],
+                backgroundColor: [
+                    'rgb(0, 0, 255)',  // Azul com 50% de opacidade para acertos
+                    'rgb(255, 0, 0)'   // Vermelho com 50% de opacidade para erros
+                ],
+                borderColor: [
+                    'rgba(0, 0, 255, 1)',    // Azul para acertos
+                    'rgba(255, 0, 0, 1)'     // Vermelho para erros
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    display: false  // Desabilita o eixo Y
+                }
+            },
+            plugins: {
+                legend: {
+                    padding: 20  // Adiciona um espaçamento entre a legenda e o gráfico
+                }
+            }
+        }
+    });
+    var ctx = document.getElementById('dash_tempo');
+    var opts = {
+        angle: 0, // O ângulo inicial do gauge
+        lineWidth: 0.2, // A largura da linha do gauge
+        radiusScale: 1, // A escala do raio do gauge
+        pointer: {
+            length: 0.6, // O comprimento do ponteiro
+            strokeWidth: 0.035, // A largura da linha do ponteiro
+            color: '#000000' // A cor do ponteiro
+        },
+        staticLabels: {
+            font: "10px sans-serif", // A fonte das etiquetas estáticas
+            labels: [0, totalPerguntas * 20], // Os rótulos das extremidades do gauge (0 e a quantidade de perguntas vezes 20)
+            color: "#000000", // A cor das etiquetas estáticas
+            fractionDigits: 0 // A quantidade de dígitos após o ponto decimal
+        },
+        staticZones: [
+            { strokeStyle: "#F03E3E", min: 0, max: (totalPerguntas * 20) / 2 }, // Zona vermelha para valores abaixo da metade do tempo
+            { strokeStyle: "#FFDD00", min: (totalPerguntas * 20) / 2, max: totalPerguntas * 20 } // Zona amarela para valores acima da metade do tempo
+        ],
+        limitMax: false, // Se deve limitar o máximo
+        limitMin: false, // Se deve limitar o mínimo
+        highDpiSupport: true // Se deve habilitar o suporte de alta resolução
+    };
+
+    var target = document.getElementById('dash_acertos'); // Seu elemento de destino
+    var ctxTempo = document.getElementById('dash_tempo');
+    var optsTempo = {
+    angle: 0,
+    lineWidth: 0.2,
+    radiusScale: 1,
+    pointer: {
+        length: 0.6,
+        strokeWidth: 0.035,
+        color: '#000000'
+    },
+    staticLabels: {
+        font: "10px sans-serif",
+        labels: [0, totalPerguntas * 20],
+        color: "#000000",
+        fractionDigits: 0
+    },
+    staticZones: [
+        { strokeStyle: "#F03E3E", min: 0, max: (totalPerguntas * 20) / 2 },
+        { strokeStyle: "#FFDD00", min: (totalPerguntas * 20) / 2, max: totalPerguntas * 20 }
+    ],
+    limitMax: false,
+    limitMin: false,
+    highDpiSupport: true
+};
+
+var gaugeTempo = new Gauge(ctxTempo).setOptions(optsTempo);
+gaugeTempo.maxValue = totalPerguntas * 20;
+gaugeTempo.set(tempoSegundos);
+    var gauge = new Gauge(target).setOptions(opts); // Cria o gauge
+    gauge.maxValue = totalPerguntas * 20; // Define o valor máximo do gauge
+    gauge.set(tempoSegundos); // Define o valor atual do gauge
+}
+    new Chart(ctx, {
+        type: 'gauge',
+        data: {
+            datasets: [{
+                value: tempoSegundos, // Valor atual do tempo de resposta
+                gaugeTotal: totalPerguntas * 20, // Valor máximo do gauge (quantidade de perguntas vezes 20 segundos)
+                gaugeLabel: 'Tempo de Resposta (segundos)'
+            }]
+        },
+        options: {
+            layout: {
+                padding: {
+                    top: 20, // Adiciona um espaçamento superior
+                    bottom: 20 // Adiciona um espaçamento inferior
+                }
+            },
+            needle: {
+                radiusPercentage: 2, // Define o tamanho do ponteiro
+                widthPercentage: 2 // Define a largura do ponteiro
+            },
+            valueLabel: {
+                display: true, // Exibe o valor do gauge
+                formatter: function (value) {
+                    return value.toFixed(0); // Formata o valor para não exibir casas decimais
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Desabilita a legenda
+                }
+            }
+        }
+    });
+
+
+
+
+    </script>
+</body>
+
+</html>

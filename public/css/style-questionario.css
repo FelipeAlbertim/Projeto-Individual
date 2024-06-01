@@ -96,7 +96,7 @@ body {
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     height: calc(100vh - 100px);
     padding: 20px;
 }
@@ -106,7 +106,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 2rem;    
+    gap: 2rem;
     padding: 20px;
     max-width: 800px;
 }
@@ -125,7 +125,7 @@ body {
     color: #fff;
 }
 
-.textoIntrodutorio li:hover{
+.textoIntrodutorio li:hover {
     text-decoration: underline;
     cursor: default;
 }
@@ -134,7 +134,8 @@ body {
     text-align: center;
 }
 
-.textoIntrodutorio h1,h2 {
+.textoIntrodutorio h1,
+h2 {
     margin-bottom: 1rem;
     color: #fff;
 }
@@ -143,7 +144,7 @@ body {
     color: #FF4655;
 }
 
-#start{
+#start {
     background-color: #FF4655;
     border-color: white;
     font-size: 20px;
@@ -153,15 +154,15 @@ body {
     border-radius: 5px;
     outline: none;
     font-family: "Inter";
-    color:white;
+    color: white;
     text-align: center;
-    background-color: #FF4655;    
+    background-color: #FF4655;
     display: flex;
     gap: 20px;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     cursor: pointer;
-    
+
 }
 
 
@@ -183,22 +184,22 @@ body {
 /*  ----------------------  perguntas -----------------------------------*/
 
 
-#pergunta {       
+#pergunta {
     display: flex;
     align-items: center;
     justify-content: center;
-    display: flex; 
+    display: flex;
     color: #fff;
     width: 100%;
     height: auto;
     padding: 40px;
     text-align: center;
-    border-radius: 10px;    
+    border-radius: 10px;
 }
 
 /*  ----------------------  respostas -----------------------------------*/
 
-.respostas{
+.respostas {
     display: flex;
     gap: 2rem;
     align-items: center;
@@ -209,7 +210,7 @@ body {
 .resposta {
     width: 25%;
     height: 35vh;
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: center;
     border: 4px solid blue;
@@ -227,7 +228,7 @@ body {
 
 /*  ----------------------  botão proxima pergunta -----------------------------------*/
 
-#proxima_pergunta{
+#proxima_pergunta {
     width: 80%;
     height: 15vh;
     color: white;
@@ -242,4 +243,64 @@ body {
 
 #proxima_pergunta:hover {
     background-color: #0056b3;
+}
+
+/*  ----------------------  div final -----------------------------------*/
+
+#fim {
+    border: solid 5px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 80%;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    align-content: center;
+}
+#graficos{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: 2.5rem;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    align-content: center;
+}
+.dash{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+}
+
+#tempo {
+    border: solid 4px red;    
+}
+
+#acertos {
+    border: solid 4px blue;
+}
+
+#botao{
+    border: solid 5px cyan;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#dash_acertos {
+    width: 200px;
+    height: 200px;
 }
