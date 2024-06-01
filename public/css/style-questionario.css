@@ -144,6 +144,10 @@ h2 {
     color: #FF4655;
 }
 
+canvas{
+    width: 100%;
+}
+
 #start {
     background-color: #FF4655;
     border-color: white;
