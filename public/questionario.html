@@ -57,26 +57,27 @@
                 <h1 class="textoCentralizado"> Olá, <span id="span_nome"></span> </h1>
 
                 <h2 style="padding-bottom: 20px;"> Como funciona o quiz:</h2>
-                
+
                 <ol>
                     <li>O quiz tem 10 perguntas de múltipla escolha, todas sobre Valorant, é claro!</li>
                     <li>Escolha a resposta que você acha certa. Não se preocupe, ninguém vai julgar se você errar.</li>
                     <li>Você tem 2 minutos para responder todas as perguntas, mas sem estresse, ok?</li>
-                    <li>Responda todas as perguntas antes que o tempo acabe. Se não der tempo, o quiz vai encerrar sozinho.</li>
+                    <li>Responda todas as perguntas antes que o tempo acabe. Se não der tempo, o quiz vai encerrar
+                        sozinho.</li>
                     <li>Sua pontuação e seu elo será baseada no número de respostas corretas.</li>
                     <li>Se empatar com alguém, quem terminar mais rápido ganha mais pontos!</li>
                     <li>O resultado aparece na hora. Será que você é um verdadeiro mestre de Valorant?</li>
                     <li>Divirta-se e jogue!</li>
                 </ol>
-            </div>            
-            <button id="start" onclick="escondeIntrucao()">Começar</button>
+            </div>
+            <button id="start" onclick="escondeIntrucao(), atualizarPergunta()">Começar</button>
         </div>
 
         <!-- PERGUNTAS -->
 
         <div id="questao" style="display: none;">
-            <span id="pergunta">
-                <h1>Lorem ipsum dolor sit amet.</h1>
+            <span>
+                <h1 id="pergunta">Lorem ipsum dolor sit amet.</h1>
             </span>
 
             <div class="respostas">
@@ -86,7 +87,7 @@
                 <span class="resposta">Lorem, ipsum.</span>
             </div>
 
-            <button id="proxima_pergunta" onclick="quiz()">Proxima Pergunta !</button>
+            <button id="proxima_pergunta" onclick="atualizarPergunta()">Proxima Pergunta !</button>
         </div>
 
     </div>
@@ -96,6 +97,8 @@
 </body>
 
 </html>
+
+
 
 <script>
     var nome_usuario = sessionStorage.NOME_USUARIO;
@@ -108,21 +111,49 @@
         document.getElementById("questao").style.display = 'block';
     }
 
-    function quiz(){
-        // fazer uma função para buscar a pergunta atual (0)
-
-        // fazer uma função para buscar as possiveis respostas dessa pergunta
-
-        // comparar se a resposta que ele assinalou esta de acordo com a correta ou nao 
-
-        // if(respostaUsuario == respostaCorreta){
-            // acertos++
-        // }
-        
 
 
-            // no final de tudo comparar com o banco 
-        
+
+    //    function listar(){
+    // fazer uma função para buscar a pergunta atual (0)
+
+    // fazer uma função para buscar as possiveis respostas dessa pergunta
+
+    // comparar se a resposta que ele assinalou esta de acordo com a correta ou nao 
+
+    // if(respostaUsuario == respostaCorreta){
+    // acertos++
+    // }       
+
+
+    // no final de tudo comparar com o banco 
+
+    // }
+    var perguntaAtual = 0
+
+    function atualizarPergunta() {
+        fetch("/avisos/listarPergunta").then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    throw "Nenhum resultado encontrado!!";
+                }
+
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+
+                    // for (let i = 0; i < resposta.length; i++) {
+                    var textoPergunta = resposta[perguntaAtual];
+                    pergunta.innerHTML = `${perguntaAtual + 1}. ${textoPergunta.textoPergunta}`;
+                    // }
+                    perguntaAtual++
+                });
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+            // finalizarAguardar();
+        });
     }
-
 </script>
