@@ -18,8 +18,7 @@ create table quiz(
 idQUiz int auto_increment primary key,
 nomeQuiz varchar(45));
 
-insert into quiz values
-(default,'Perguntas gerais sobre valorant');
+insert into quiz values (default,'Perguntas gerais sobre valorant');
 
 create table pergunta(
 idPergunta int primary key auto_increment,
@@ -105,13 +104,12 @@ foreign key (fkUsuario) references usuario(idUsuario),
 fkQuiz int,
 foreign key (fkQuiz) references quiz(idQuiz),
 primary key (idTentativa,fkUsuario,fkQuiz),
+dataHoraTentativa datetime default current_timestamp,
 tempoTentativa time,
 pontuacao int);
 
 insert into tentativa values
-(default,1,1,'00:01:23',765);
-
-
+(default,1,1,'2024-06-04 16:55:12','00:01:23',765);
 
 create table ranking(
 fkUsuario int,
@@ -143,6 +141,7 @@ insert into ranking values
 select idTentativa as Tentativa,
 	usuario.nome as 'Nome do usuario',
     quiz.nomeQuiz as 'Nome do Quiz',
+    dataHoraTentativa as 'Data da Tentativa',
     tempoTentativa as 'Tempo da Tentativa',
     pontuacao as 'Pontos'
     from tentativa
