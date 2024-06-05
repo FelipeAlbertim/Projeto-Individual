@@ -137,3 +137,14 @@ insert into ranking values
 (1,1,1,8,1),
 (1,1,1,9,1),
 (1,1,1,10,4);
+
+/*	INÍCIO DOS SELECT's	*/
+
+select idTentativa as Tentativa,
+	usuario.nome as 'Nome do usuario',
+    quiz.nomeQuiz as 'Nome do Quiz',
+    tempoTentativa as 'Tempo da Tentativa',
+    pontuacao as 'Pontos'
+    from tentativa
+join usuario on tentativa.fkUsuario = idUsuario
+join quiz on tentativa.fkQuiz = idQuiz;
