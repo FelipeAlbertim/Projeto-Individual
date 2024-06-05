@@ -97,7 +97,7 @@
                 </div>
 
                 <div id="botao">
-                    <button class="start" onclick="imprimirGraficosComparativos()">COMPARATIVO</button>
+                    <button class="start" onclick="imprimirGraficosComparativos(),inserirResultados()">COMPARATIVO</button>
                 </div>
 
             </div>
@@ -151,8 +151,6 @@
     var fazendoQuiz = false
     var acertos = 0
     var totalPerguntas = 0
-
-
 
     span_nome.innerHTML += `${nome_usuario} !`;
 
@@ -244,10 +242,6 @@
             console.error(resposta);
         });
     }
-
-
-
-
 
     function confirmarResposta() {
         tempoFimPergunta = Date.now();
@@ -413,6 +407,10 @@
                 }
             }
         });
+    }
+
+    function inserirResultados(){
+        alert(`Você terminou em :${tempoSegundos}, e Acertou: ${acertos}`)
     }
 
 </script>

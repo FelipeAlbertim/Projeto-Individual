@@ -105,11 +105,11 @@ fkQuiz int,
 foreign key (fkQuiz) references quiz(idQuiz),
 primary key (idTentativa,fkUsuario,fkQuiz),
 dataHoraTentativa datetime default current_timestamp,
-tempoTentativa time,
+tempoTentativa decimal(10,3),
 pontuacao int);
 
 insert into tentativa values
-(default,1,1,'2024-06-04 16:55:12','00:01:23',765);
+(default,1,1,default,45.136,765);
 
 create table ranking(
 fkUsuario int,
@@ -142,8 +142,9 @@ select idTentativa as Tentativa,
 	usuario.nome as 'Nome do usuario',
     quiz.nomeQuiz as 'Nome do Quiz',
     dataHoraTentativa as 'Data da Tentativa',
-    tempoTentativa as 'Tempo da Tentativa',
+    tempoTentativa as 'Tempo da Tentativa (SEGUNDOS)',
     pontuacao as 'Pontos'
     from tentativa
 join usuario on tentativa.fkUsuario = idUsuario
 join quiz on tentativa.fkQuiz = idQuiz;
+
