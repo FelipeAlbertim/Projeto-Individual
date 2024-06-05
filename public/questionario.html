@@ -41,6 +41,7 @@
 
     <div class="container">
         <div id="introducao" style="display: flex;">
+            <!-- <div id="introducao" style="display: none;"> -->
             <div class="textoIntrodutorio">
                 <h1 class="textoCentralizado"> Olá, <span id="span_nome"></span> </h1>
                 <h2 style="padding-bottom: 20px;"> Como funciona o quiz:</h2>
@@ -75,26 +76,24 @@
 
         <div id="fim" style="display: none;">
 
-            <div id="graficos_resultado_quiz">
+            <div class="graficos">
 
-                <div class="graficos">
+                <div class="dash">
 
-                    <div id="tempo" class="dash">
-                        <h1 style="color: white;">Tempo (Segundos)</h1>
+                    <div id="tempo">
+                        <h1 style="color: white;" >Tempo (Segundos)</h1>
                         <p style="color: white;"> Tempo de prova -> <span id="spanSegundos">Error</span> Segundos</p>
 
                         <canvas id="dash_tempo"></canvas>
-
                     </div>
 
-                    <div id="acertos" class="dash">
+                    <div id="acertos">
                         <h1 style="color: white;">Acertos</h1>
                         <p style="color: white;"> Acertos -> <span id="spanAcertos"></span></p>
 
                         <canvas id="dash_acertos"></canvas>
 
                     </div>
-
                 </div>
 
                 <div id="botao">
@@ -102,9 +101,6 @@
                 </div>
 
             </div>
-
-
-
         </div>
 
         <div id="graficosComparativos" class="graficos" style="display: none;">
@@ -113,7 +109,7 @@
                 <h1> 🫵 Você X Mundo 🌎 </h1>
             </div>
 
-            <div class="graficos">
+            <div class="graficos1">
 
                 <div id="grafico_comparativo_tempo">
                     <canvas id="comparativoTempo"></canvas>
@@ -122,10 +118,11 @@
                 <div id="grafico_comparativo_elo">
                     <canvas id="comparativoGlobal1"></canvas>
                 </div>
-
             </div>
 
         </div>
+
+    </div>
 
 
     </div>
@@ -300,6 +297,7 @@
                 plugins: {
                     legend: {
                         padding: 20
+
                     }
                 }
             }
@@ -324,8 +322,8 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
-                    }
+                        beginAtZero: true,                        
+                    },
                 }
             }
         });
@@ -336,6 +334,8 @@
 
     function imprimirGraficosComparativos() {
         fim.style.display = "none"
+        introducao.style.display = "none"
+        questao.style.display = "none"
         graficosComparativos.style.display = "flex"
 
         const comparativoTempo = document.getElementById('comparativoTempo');
@@ -353,7 +353,31 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white',
+
+                        }
                     }
                 }
             }
@@ -374,7 +398,17 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        display: false,
+
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white',
+
+                        }
                     }
                 }
             }

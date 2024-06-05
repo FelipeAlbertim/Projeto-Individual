@@ -157,11 +157,12 @@ canvas {
     border-radius: 5px;
     outline: none;
     font-family: "Inter";
+    font-size: 20px;
     color: white;
     text-align: center;
     background-color: #FF4655;
     display: flex;
-    gap: 20px;
+    /* gap: 20px; */
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -266,6 +267,7 @@ canvas {
 
 .graficos {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
@@ -275,17 +277,43 @@ canvas {
     background-color: #333;
     border-radius: 10px;
     align-content: center;
-    border: solid 5px red;
+    /* border: solid 5px red; */
 }
+.graficos1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    width: 90%;
+    gap: 2.5rem;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    align-content: center;
+    /* border: solid 5px red; */
+}
+
+/* .graficos1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 70%;
+    gap: 2.5rem;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    align-content: center;
+    border: solid 5px red;
+} */
 
 .dash {
     display: flex;
-    flex-direction: column;
     gap: 2rem;
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 50%;
+    width: 100%;
 }
 
 #dash_tempo {
@@ -294,16 +322,28 @@ canvas {
 }
 
 #dash_acertos {
-    width: 40%;
-    height: 35%;
+    width: 30%;
+    height: 30%;
 }
 
 #tempo {
-    border: solid 4px red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+    height: 90%;
+    /* border: solid 4px red; */
 }
 
 #acertos {
-    border: solid 4px blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* border: solid 4px blue; */
+    width: 40%;
+    height: 90%;
 }
 
 #botao {
@@ -343,14 +383,14 @@ canvas {
     width: 50%;
     height: 100%;
     gap: 20px;
-    border: solid 5px white;
+    /*  border: solid 5px white; */
 }
 
 #grafico_comparativo_tempo {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: solid 5px white;
+    /* border: solid 5px white; */
     width: 50%;
     height: 100%;
 }
