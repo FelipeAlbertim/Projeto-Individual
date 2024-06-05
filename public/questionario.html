@@ -81,7 +81,7 @@
                 <div class="dash">
 
                     <div id="tempo">
-                        <h1 style="color: white;" >Tempo (Segundos)</h1>
+                        <h1 style="color: white;">Tempo (Segundos)</h1>
                         <p style="color: white;"> Tempo de prova -> <span id="spanSegundos">Error</span> Segundos</p>
 
                         <canvas id="dash_tempo"></canvas>
@@ -97,7 +97,8 @@
                 </div>
 
                 <div id="botao">
-                    <button class="start" onclick="imprimirGraficosComparativos(),inserirResultados()">COMPARATIVO</button>
+                    <button class="start"
+                        onclick="imprimirGraficosComparativos(),inserirResultados()">COMPARATIVO</button>
                 </div>
 
             </div>
@@ -132,6 +133,7 @@
 
 <script>
     var nome_usuario = sessionStorage.NOME_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
 
     var perguntaAtual = 0;
     var respostaSelecionada = null;
@@ -316,7 +318,7 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true,                        
+                        beginAtZero: true,
                     },
                 }
             }
@@ -409,8 +411,34 @@
         });
     }
 
-    function inserirResultados(){
-        alert(`Você terminou em :${tempoSegundos}, e Acertou: ${acertos}`)
+
+    function inserirResultados() {
+
+        fetch("/quiz/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkUsuarioServer: idUsuario,
+                tempoTentativaServer: tempoSegundos,
+                pontuacaoServer: acertos
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log(resposta)
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
     }
 
 </script>

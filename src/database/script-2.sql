@@ -109,7 +109,7 @@ tempoTentativa decimal(10,3),
 pontuacao int);
 
 insert into tentativa values
-(default,1,1,default,45.136,765);
+(default,1,1,default,45.136,6);
 
 create table ranking(
 fkUsuario int,
@@ -147,4 +147,12 @@ select idTentativa as Tentativa,
     from tentativa
 join usuario on tentativa.fkUsuario = idUsuario
 join quiz on tentativa.fkQuiz = idQuiz;
+
+-- inserirResultadoQuiz(acertos,tempo,idUsuario)
+
+-- insert into tentativa(fkQuiz,fkUsuario,tempoTentativa, pontuacao) values (1,${idUsuario},${tempo},${acertos});
+
+select * from tentativa;
+
+
 
