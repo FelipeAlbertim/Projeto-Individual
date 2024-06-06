@@ -132,29 +132,14 @@
 </html>
 
 <script>
-    var nome_usuario = sessionStorage.NOME_USUARIO;
+    span_nome.innerHTML = sessionStorage.NOME_USUARIO;
+
     var idUsuario = sessionStorage.ID_USUARIO;
-
-    var perguntaAtual = 0;
-    var respostaSelecionada = null;
-    var textoRespostaSelecionada = null;
-    var textoRespostaCorreta = ""
-    var counter;
-
+    
     var tempoSegundos = 0
-    var tempoQuestao = 0
-    var tempoAnterior = 0
-    var listaDiferencaTempo = []
-
-    var tempoInicioPergunta = 0;
-    var tempoFimPergunta = 0;
-
     var tempoInicioQuiz = 0;
-    var fazendoQuiz = false
-    var acertos = 0
-    var totalPerguntas = 0
+    var fazendoQuiz = false    
 
-    span_nome.innerHTML += `${nome_usuario} !`;
 
     function escondeIntrucao() {
         introducao.style.display = 'none';
@@ -169,6 +154,12 @@
         tempoInicioQuiz = Date.now();
     }
 
+
+    var respostaSelecionada = null;
+    var textoRespostaSelecionada = null;
+    var textoRespostaCorreta = ""
+    var counter;
+
     function selecionarResposta(respostaId) {
         respostaSelecionada = respostaId;
         textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
@@ -177,11 +168,15 @@
         });
         document.getElementById(`Resposta_${respostaId}`).style.backgroundColor = 'lightblue';
     }
+    
+    var totalPerguntas = 0
+    var perguntaAtual = 0;
+    var tempoInicioPergunta = 0;
+    var acertos = 0
 
     function atualizarPergunta() {
         fazendoQuiz = true;
         tempoInicioPergunta = Date.now();
-
         fetch("/avisos/listarPergunta").then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) {
@@ -195,7 +190,6 @@
                         perguntaAtual++;
                         atualizarResposta();
                     } else {
-
                         fazendoQuiz = false
                         clearInterval(counter);
                         questao.style.display = "none"
@@ -214,6 +208,7 @@
         });
     }
 
+    
     function atualizarResposta() {
         fazendoQuiz = true
         fetch(`/avisos/listarResposta/${perguntaAtual}`).then(function (resposta) {
@@ -244,6 +239,9 @@
             console.error(resposta);
         });
     }
+
+    var listaDiferencaTempo = []
+    var tempoFimPergunta = 0;
 
     function confirmarResposta() {
         tempoFimPergunta = Date.now();
@@ -342,7 +340,7 @@
                 labels: ['Mínimo', 'Seu Tempo', 'Máximo'],
                 datasets: [{
                     label: ['Gráfico de tempo médio'],
-                    data: [2.25, 1.02, 3.45],
+                    data: [20000, 50000, 12000],
                     borderWidth: 1
                 }]
             },
@@ -396,14 +394,12 @@
                     y: {
                         beginAtZero: true,
                         display: false,
-
                     }
                 },
                 plugins: {
                     legend: {
                         labels: {
                             color: 'white',
-
                         }
                     }
                 }
