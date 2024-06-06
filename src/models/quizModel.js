@@ -8,18 +8,20 @@ function cadastrar(idUsuario, tempoQuiz, pontos) {
     return database.executar(instrucao);
 }
 
-function listar() {
+function listar(idUsuario) {
     var instrucao = `
-    select idTentativa as Tentativa,
-        usuario.nome as 'Nome do usuario',
-        quiz.nomeQuiz as 'Nome do Quiz',
-        dataHoraTentativa as 'Data da Tentativa',
-        tempoTentativa as 'Tempo da Tentativa (SEGUNDOS)',
-        pontuacao as 'Pontos'
-        from tentativa
-    join usuario on tentativa.fkUsuario = idUsuario
-    join quiz on tentativa.fkQuiz = idQuiz;    
-    `;
+    select min(tempoTentativa) as 'minTempo',
+        avg(tempoTentativa) as 'mediaTempo',
+        max(tempoTentativa) as 'maxTempo',
+        (select tempoTentativa 
+        from tentativa 
+        where fkUsuario = ${idUsuario} and fkQuiz = 1 
+        order by dataHoraTentativa desc 
+        limit 1) as 'tentativaTempo'
+    from tentativa
+    where fkQuiz = 1; 
+    `
+    ;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }

@@ -140,7 +140,6 @@
     var tempoInicioQuiz = 0;
     var fazendoQuiz = false    
 
-
     function escondeIntrucao() {
         introducao.style.display = 'none';
         questao.style.display = 'block';
@@ -153,7 +152,6 @@
         }
         tempoInicioQuiz = Date.now();
     }
-
 
     var respostaSelecionada = null;
     var textoRespostaSelecionada = null;
@@ -207,7 +205,6 @@
             console.error(erro);
         });
     }
-
     
     function atualizarResposta() {
         fazendoQuiz = true
@@ -260,7 +257,7 @@
             atualizarPergunta();
         }
     }
-
+    var tempoTotalQuiz = 0
     function imprimirGraficosResultado() {
         var ctxAcertos = document.getElementById('dash_acertos');
 
@@ -322,7 +319,7 @@
             }
         });
         var tempoFimQuiz = Date.now();
-        var tempoTotalQuiz = (tempoFimQuiz - tempoInicioQuiz) / 1000;
+        tempoTotalQuiz = (tempoFimQuiz - tempoInicioQuiz) / 1000;
         spanSegundos.innerHTML = tempoTotalQuiz.toFixed(2);
     }
 
@@ -337,10 +334,10 @@
         new Chart(comparativoTempo, {
             type: 'bar',
             data: {
-                labels: ['Mínimo', 'Seu Tempo', 'Máximo'],
+                labels: ['Mínimo', 'Tempo Médio','Seu Tempo', 'Máximo'],
                 datasets: [{
                     label: ['Gráfico de tempo médio'],
-                    data: [20000, 50000, 12000],
+                    data: [25.532, 45.694, 19.856 , 72.30],
                     borderWidth: 1
                 }]
             },
@@ -407,7 +404,6 @@
         });
     }
 
-
     function inserirResultados() {
 
         fetch("/quiz/cadastrar", {
@@ -417,7 +413,7 @@
             },
             body: JSON.stringify({
                 fkUsuarioServer: idUsuario,
-                tempoTentativaServer: tempoSegundos,
+                tempoTentativaServer: tempoTotalQuiz,
                 pontuacaoServer: acertos
             }),
         })
