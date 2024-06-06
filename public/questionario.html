@@ -98,9 +98,8 @@
 
                 <div id="botao">
                     <button class="start"
-                        onclick="imprimirGraficosComparativos(),inserirResultados()">COMPARATIVO</button>
-                </div>
-
+                    onclick="inserirResultados()">COMPARATIVO</button>
+                    </div>
             </div>
         </div>
 
@@ -135,10 +134,10 @@
     span_nome.innerHTML = sessionStorage.NOME_USUARIO;
 
     var idUsuario = sessionStorage.ID_USUARIO;
-    
+
     var tempoSegundos = 0
     var tempoInicioQuiz = 0;
-    var fazendoQuiz = false    
+    var fazendoQuiz = false
 
     function escondeIntrucao() {
         introducao.style.display = 'none';
@@ -166,7 +165,7 @@
         });
         document.getElementById(`Resposta_${respostaId}`).style.backgroundColor = 'lightblue';
     }
-    
+
     var totalPerguntas = 0
     var perguntaAtual = 0;
     var tempoInicioPergunta = 0;
@@ -205,7 +204,7 @@
             console.error(erro);
         });
     }
-    
+
     function atualizarResposta() {
         fazendoQuiz = true
         fetch(`/avisos/listarResposta/${perguntaAtual}`).then(function (resposta) {
@@ -334,10 +333,10 @@
         new Chart(comparativoTempo, {
             type: 'bar',
             data: {
-                labels: ['Mínimo', 'Tempo Médio','Seu Tempo', 'Máximo'],
+                labels: ['Mínimo', 'Tempo Médio', 'Seu Tempo', 'Máximo'],
                 datasets: [{
-                    label: ['Gráfico de tempo médio'],
-                    data: [25.532, 45.694, 19.856 , 72.30],
+                    label: ['Gráfico de tempo médio (segundos)'],
+                    data: data,
                     borderWidth: 1
                 }]
             },
@@ -422,6 +421,7 @@
 
                 if (resposta.ok) {
                     console.log(resposta)
+                    obterDadosGrafico(idUsuario)
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -431,6 +431,35 @@
             });
 
         return false;
+
+        
+    }
+
+    var data = []
+    function obterDadosGrafico(idUsuario) {
+
+            fetch(`/quiz/listar/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    console.log(`CONTEUDO ANTES DE MANDAR PARA A RESPOSTA - MINIMO DE TEMPO ${JSON.stringify(resposta[0])}`)
+
+                    data.push(resposta[0].minTempo)
+                    data.push(resposta[0].mediaTempo)
+                    data.push(resposta[0].tentativaTempo)
+                    data.push(resposta[0].maxTempo)
+                    console.log(data)
+                    imprimirGraficosComparativos()
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
     }
 
 </script>

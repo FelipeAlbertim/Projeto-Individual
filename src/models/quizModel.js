@@ -12,12 +12,12 @@ function listar(idUsuario) {
     var instrucao = `
     select min(tempoTentativa) as 'minTempo',
         avg(tempoTentativa) as 'mediaTempo',
-        max(tempoTentativa) as 'maxTempo',
         (select tempoTentativa 
         from tentativa 
         where fkUsuario = ${idUsuario} and fkQuiz = 1 
         order by dataHoraTentativa desc 
-        limit 1) as 'tentativaTempo'
+        limit 1) as 'tentativaTempo',
+        max(tempoTentativa) as 'maxTempo'
     from tentativa
     where fkQuiz = 1; 
     `

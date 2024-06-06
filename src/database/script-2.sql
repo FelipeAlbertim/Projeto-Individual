@@ -109,7 +109,8 @@ tempoTentativa decimal(10,3),
 pontuacao int);
 
 insert into tentativa values
-(default,1,1,default,45.136,6);
+(default,1,1,default,20,6),
+(default,1,1,default,120,6);
 
 create table ranking(
 fkUsuario int,
@@ -151,8 +152,42 @@ join quiz on tentativa.fkQuiz = idQuiz;
 -- inserirResultadoQuiz(acertos,tempo,idUsuario)
 
 -- insert into tentativa(fkQuiz,fkUsuario,tempoTentativa, pontuacao) values (1,${idUsuario},${tempo},${acertos});
-
 select * from tentativa;
+select * from usuario;
 
+select idTentativa as Tentativa,
+        usuario.nome as 'Nome do usuario',
+        quiz.nomeQuiz as 'Nome do Quiz',
+        dataHoraTentativa as 'Data da Tentativa',
+        tempoTentativa as 'Tempo da Tentativa (SEGUNDOS)',
+        pontuacao as 'Pontos'
+        from tentativa
+    join usuario on tentativa.fkUsuario = idUsuario
+    join quiz on tentativa.fkQuiz = idQuiz;    
+    
+select min(tempoTentativa) as minTempoTentativa,
+	avg(tempoTentativa) as mediaTempoTentativa,
+    max(tempoTentativa) as maximoTempoTentativa
+    from tentativa join usuario
+    on fkUsuario = idUsuario    
+    where idUsuario = 1;
 
-
+select min(tempoTentativa) as minTempoTentativa,
+	avg(tempoTentativa) as mediaTempoTentativa,
+    (select tempoTentativa as usuarioTempoTentativa from tentativa join usuario on tentativa.fkUsuario = idUsuario where idUsuario = 1),
+    max(tempoTentativa) as maximoTempoTentativa
+    from tentativa join usuario
+    on fkUsuario = idUsuario    
+    where idUsuario = 1;
+    
+select min(tempoTentativa) as 'minTempo',
+        avg(tempoTentativa) as 'mediaTempo',
+        (select tempoTentativa
+        from tentativa
+        where fkUsuario = 1 and fkQuiz = 1
+        order by dataHoraTentativa desc
+        limit 1) as 'tentativaTempo',
+        max(tempoTentativa) as 'maxTempo'
+    from tentativa
+    where fkQuiz = 1;
+    

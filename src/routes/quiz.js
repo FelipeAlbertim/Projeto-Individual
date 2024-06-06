@@ -8,8 +8,7 @@ router.post("/cadastrar", function (req, res) {
     quizController.cadastrar(req, res);
 });
 
-router.get("/listar:idUsuario", function (req, res) {
-    // função a ser chamada quando acessar /carros/listar
+router.get("/listar/:idUsuario", function (req, res) {
     quizController.listar(req, res);
 });
 
