@@ -67,24 +67,43 @@
             </div>
         </div>
 
+
         <div id="top-jogadores">
+            <div id="eloUsuario">
+                <div class="alinha"
+                    style="height: auto; width: 100%; display: flex;flex-direction: column; align-items: center; justify-content: center;">
+                    <p id="p_usuario" style="margin-bottom: 2rem;">voce não tem acesso</p>
+                    <div id="img_usuario"></div>
+                    <p id="p_msg_usuario" style="margin-top: 2rem;">oi</p>
+                </div>
+
+            </div>
             <h2 style="font-size: 20px;">MELHORES JOGADORES</h2>
             <ul>
                 <li>1° - Player 1</li>
                 <li>2° - Player 2</li>
                 <li>3° - Player 3</li>
             </ul>
-            <h2 style="font-size: 20px;">PIORES JOGADORES</h2>
-            <ul>
-                <li>30° - Player </li>
-                <li>29° - Player </li>
-                <li>28° - Player </li>
-            </ul>
+
         </div>
     </div>
 
+    </div>
+
     <script>
-        function aparecerBotaoCadastro(){
+        if (sessionStorage.EMAIL_USUARIO == null && sessionStorage.NOME_USUARIO == null) {
+            aparecerBotaoCadastro();
+            p_usuario.innerHTML = "Infelizmente você ainda não fez cadastro";
+            p_msg_usuario.innerHTML = "Clique aqui para fazer cadastro"
+        img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/sem-ranque.webp" alt="">`
+        } else {
+            aparecerBotaoSair();
+            p_usuario.innerHTML = `Olá <span style="color:red;"> ${sessionStorage.NOME_USUARIO}</span>`
+            p_msg_usuario.innerHTML = `Você está em ${1}° lugar`
+            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/radiante-icone.png" alt="">`
+        }
+
+        function aparecerBotaoCadastro() {
             document.getElementById('btn_cadastro').style.display = 'block';
             document.getElementById('btn_login').style.display = 'block';
         }
@@ -95,13 +114,7 @@
 
         function sumirBotaoSair() {
             document.getElementById('btn_sair').style.display = 'none';
-        }
-
-        if (sessionStorage.EMAIL_USUARIO == null && sessionStorage.NOME_USUARIO == null) {
-            aparecerBotaoCadastro();
-        } else {
-            aparecerBotaoSair();
-        }
+        }        
     </script>
 </body>
 

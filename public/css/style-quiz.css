@@ -109,7 +109,7 @@ body {
 }
 
 #top-jogadores{
-    height:55vh;
+    height:fit-content;
     width: 15%;
     display: flex;
     font-size: 22px;
@@ -117,13 +117,13 @@ body {
     background-color: #1d1d1d85;
     border-radius: 10px;
     align-content: center;
-    justify-content: center;
+    justify-content: flex-start;
     position: absolute;
     bottom: 0;
     right: 0;
     flex-direction: column;
     list-style: none;
-    gap: 8px;
+    gap: 3rem;
     position: absolute;
     top: 100px;
     right: 10PX;
@@ -139,7 +139,7 @@ body {
     height: 45px;
 }
 #top-jogadores ul {
-    height: 80%;
+    height: auto;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
