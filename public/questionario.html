@@ -57,7 +57,7 @@
                     <li>Divirta-se e jogue!</li>
                 </ol>
             </div>
-            <button class="start" onclick="escondeIntrucao(), atualizarPergunta()"
+            <button class="start" onclick="escondeIntrucao()"
                 style="font-size: 20px;">Começar</button>
         </div>
 
@@ -66,12 +66,12 @@
                 <h1 id="pergunta">Lorem ipsum dolor sit amet.</h1>
             </span>
             <div class="respostas">
-                <span class="resposta" id="Resposta_1" onclick="selecionarResposta(1)">Lorem, ipsum.</span>
-                <span class="resposta" id="Resposta_2" onclick="selecionarResposta(2)">Lorem, ipsum.</span>
-                <span class="resposta" id="Resposta_3" onclick="selecionarResposta(3)">Lorem, ipsum.</span>
-                <span class="resposta" id="Resposta_4" onclick="selecionarResposta(4)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_1" onclick="mudaCor(1)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_2" onclick="mudaCor(2)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_3" onclick="mudaCor(3)">Lorem, ipsum.</span>
+                <span class="resposta" id="Resposta_4" onclick="mudaCor(4)">Lorem, ipsum.</span>
             </div>
-            <button id="proxima_pergunta" onclick="confirmarResposta()">Próxima Pergunta !</button>
+            <button id="proxima_pergunta" onclick="armazenaTempoAcertoQuestao()">Próxima Pergunta !</button>
         </div>
 
         <div id="fim" style="display: none;">
@@ -98,7 +98,7 @@
 
                 <div id="botao">
                     <button class="start"
-                    onclick="inserirResultados()">COMPARATIVO</button>
+                    onclick="inserirTentativa()">COMPARATIVO</button>
                     </div>
             </div>
         </div>
@@ -130,14 +130,15 @@
 
 </html>
 
-<script>
-    span_nome.innerHTML = sessionStorage.NOME_USUARIO;
-
-    var idUsuario = sessionStorage.ID_USUARIO;
-
-    var tempoSegundos = 0
-    var tempoInicioQuiz = 0;
-    var fazendoQuiz = false
+<script>    
+     function mudaCor(respostaId) {
+        respostaSelecionada = respostaId;
+        textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
+        document.querySelectorAll('.resposta').forEach(element => {
+            element.style.backgroundColor = '';
+        });
+        document.getElementById(`Resposta_${respostaId}`).style.backgroundColor = 'lightblue';
+    }
 
     function escondeIntrucao() {
         introducao.style.display = 'none';
@@ -150,26 +151,9 @@
             tempoSegundos += 1000; //
         }
         tempoInicioQuiz = Date.now();
+
+        atualizarPergunta()
     }
-
-    var respostaSelecionada = null;
-    var textoRespostaSelecionada = null;
-    var textoRespostaCorreta = ""
-    var counter;
-
-    function selecionarResposta(respostaId) {
-        respostaSelecionada = respostaId;
-        textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
-        document.querySelectorAll('.resposta').forEach(element => {
-            element.style.backgroundColor = '';
-        });
-        document.getElementById(`Resposta_${respostaId}`).style.backgroundColor = 'lightblue';
-    }
-
-    var totalPerguntas = 0
-    var perguntaAtual = 0;
-    var tempoInicioPergunta = 0;
-    var acertos = 0
 
     function atualizarPergunta() {
         fazendoQuiz = true;
@@ -192,9 +176,8 @@
                         questao.style.display = "none"
                         fim.style.display = "flex"
                         spanSegundos.innerHTML = tempoSegundos
-                        spanAcertos.innerHTML = acertos
-                        spanAcertos.innerHTML += ` / ${totalPerguntas}`
-                        imprimirGraficosResultado();
+                        spanAcertos.innerHTML = `${acertos} / ${totalPerguntas}`
+                        exibiGraficoResultadoTentativa();
                     }
                 });
             } else {
@@ -204,7 +187,7 @@
             console.error(erro);
         });
     }
-
+   
     function atualizarResposta() {
         fazendoQuiz = true
         fetch(`/avisos/listarResposta/${perguntaAtual}`).then(function (resposta) {
@@ -236,10 +219,7 @@
         });
     }
 
-    var listaDiferencaTempo = []
-    var tempoFimPergunta = 0;
-
-    function confirmarResposta() {
+    function armazenaTempoAcertoQuestao() {
         tempoFimPergunta = Date.now();
         var tempoGastoPergunta = (tempoFimPergunta - tempoInicioPergunta) / 1000;
         listaDiferencaTempo.push(tempoGastoPergunta);
@@ -256,8 +236,8 @@
             atualizarPergunta();
         }
     }
-    var tempoTotalQuiz = 0
-    function imprimirGraficosResultado() {
+    
+    function exibiGraficoResultadoTentativa() {
         var ctxAcertos = document.getElementById('dash_acertos');
 
         new Chart(ctxAcertos, {
@@ -322,7 +302,7 @@
         spanSegundos.innerHTML = tempoTotalQuiz.toFixed(2);
     }
 
-    function imprimirGraficosComparativos() {
+    function exibiGraficoComparativo() {
         fim.style.display = "none"
         introducao.style.display = "none"
         questao.style.display = "none"
@@ -336,7 +316,7 @@
                 labels: ['Mínimo', 'Tempo Médio', 'Seu Tempo', 'Máximo'],
                 datasets: [{
                     label: ['Gráfico de tempo médio (segundos)'],
-                    data: data,
+                    data: resultadoTempo,
                     borderWidth: 1
                 }]
             },
@@ -378,10 +358,10 @@
         new Chart(comparativoGlobal1, {
             type: 'pie',
             data: {
-                labels: ['RADIANTE', 'IMORTAL', 'ASCENDENTE', 'DIAMANTE', 'PLATINA', 'OURO', 'PRATA', 'FERRO'],
+                labels: ['Radiante', 'Imortal', 'Diamante', 'Ouro', 'Prata'],
                 datasets: [{
                     label: 'Jogadores',
-                    data: [3, 6, 12, 17, 20, 19, 10, 2],
+                    data: [1, 4, 9, 6, 3],
                     borderWidth: 1
                 }]
             },
@@ -403,7 +383,7 @@
         });
     }
 
-    function inserirResultados() {
+    function inserirTentativa() {
 
         fetch("/quiz/cadastrar", {
             method: "POST",
@@ -421,7 +401,7 @@
 
                 if (resposta.ok) {
                     console.log(resposta)
-                    obterDadosGrafico(idUsuario)
+                    obterDadosGraficoTempo(idUsuario)
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -434,9 +414,8 @@
 
         
     }
-
-    var data = []
-    function obterDadosGrafico(idUsuario) {
+    
+    function obterDadosGraficoTempo(idUsuario) {
 
             fetch(`/quiz/listar/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
@@ -445,12 +424,12 @@
 
                     console.log(`CONTEUDO ANTES DE MANDAR PARA A RESPOSTA - MINIMO DE TEMPO ${JSON.stringify(resposta[0])}`)
 
-                    data.push(resposta[0].minTempo)
-                    data.push(resposta[0].mediaTempo)
-                    data.push(resposta[0].tentativaTempo)
-                    data.push(resposta[0].maxTempo)
-                    console.log(data)
-                    imprimirGraficosComparativos()
+                    resultadoTempo.push(resposta[0].minTempo)
+                    resultadoTempo.push(resposta[0].mediaTempo)
+                    resultadoTempo.push(resposta[0].tentativaTempo)
+                    resultadoTempo.push(resposta[0].maxTempo)
+                    console.log(resultadoTempo)
+                    exibiGraficoComparativo()
 
                 });
             } else {
@@ -461,5 +440,26 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
     }
+
+
+    span_nome.innerHTML = sessionStorage.NOME_USUARIO;
+
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    var tempoSegundos = 0
+    var tempoInicioQuiz = 0;
+    var fazendoQuiz = false
+    var respostaSelecionada = null;
+    var textoRespostaSelecionada = null;
+    var textoRespostaCorreta = ""
+    var counter;
+    var totalPerguntas = 0
+    var perguntaAtual = 0;
+    var tempoInicioPergunta = 0;
+    var acertos = 0
+    var listaDiferencaTempo = []
+    var tempoFimPergunta = 0;
+    var tempoTotalQuiz = 0
+    var resultadoTempo = []
 
 </script>
