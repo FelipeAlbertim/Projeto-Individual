@@ -2,17 +2,32 @@ create database valorant_club2;
 
 use valorant_club2;
 
-create table usuario(
-idUsuario int auto_increment primary key,
+create table elo(
+idElo int auto_increment primary key,
+nomeElo varchar(45),
+requisitoAcerto int,
+requisitoTempo decimal(10,3)    
+);
+
+insert into elo values
+(default,'Prata',0,0),
+(default,'Platina',0,0),
+(default,'Ascendente',0,0),
+(default,'Imortal',0,0),
+(default,'Radiante',0,0);
+
+create table usuario (
+idUsuario int primary key auto_increment,
+fkElo int,
 nome varchar(45),
 nomeReal varchar(45),
 email varchar(45),
 senha varchar(255),
 historia longtext,
-elo varchar(45));
+foreign key (fkElo) references elo(idElo));
 
 insert into usuario values 
-(default,'Makita#wap','Felipe Albertim','felipe@gmail.com','123','bla bla bla bla bla bla bla ','RADIANTE');
+(default,5,'Makita#wap','Felipe Albertim','felipe@gmail.com','123','bla bla bla bla bla bla bla ');
 
 create table quiz(
 idQUiz int auto_increment primary key,
