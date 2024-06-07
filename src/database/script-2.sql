@@ -110,7 +110,7 @@ pontuacao int);
 
 insert into tentativa values
 (default,1,1,default,20,6),
-(default,1,1,default,120,6);
+(default,1,1,default,80,6);
 
 create table ranking(
 fkUsuario int,
