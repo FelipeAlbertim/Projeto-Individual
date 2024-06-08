@@ -57,8 +57,7 @@
                     <li>Divirta-se e jogue!</li>
                 </ol>
             </div>
-            <button class="start" onclick="escondeIntrucao()"
-                style="font-size: 20px;">Começar</button>
+            <button class="start" onclick="escondeIntrucao()" style="font-size: 20px;">Começar</button>
         </div>
 
         <div id="questao" style="display: none;">
@@ -97,9 +96,8 @@
                 </div>
 
                 <div id="botao">
-                    <button class="start"
-                    onclick="inserirTentativa()">COMPARATIVO</button>
-                    </div>
+                    <button class="start" onclick="inserirTentativa()">COMPARATIVO</button>
+                </div>
             </div>
         </div>
 
@@ -130,8 +128,8 @@
 
 </html>
 
-<script>    
-     function mudaCor(respostaId) {
+<script>
+    function mudaCor(respostaId) {
         respostaSelecionada = respostaId;
         textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
         document.querySelectorAll('.resposta').forEach(element => {
@@ -187,7 +185,7 @@
             console.error(erro);
         });
     }
-   
+
     function atualizarResposta() {
         fazendoQuiz = true
         fetch(`/avisos/listarResposta/${perguntaAtual}`).then(function (resposta) {
@@ -236,7 +234,7 @@
             atualizarPergunta();
         }
     }
-    
+
     function exibiGraficoResultadoTentativa() {
         var ctxAcertos = document.getElementById('dash_acertos');
 
@@ -412,12 +410,12 @@
 
         return false;
 
-        
+
     }
-    
+
     function obterDadosGraficoTempo(idUsuario) {
 
-            fetch(`/quiz/listar/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/quiz/buscarTentativaTempo/${idUsuario}`).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -438,6 +436,28 @@
         })
             .catch(function (error) {
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    var resultadoElo = {};
+    function buscarElo() {
+        fetch("/quiz/buscarCriteriosElo", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    console.log("select deu certo");
+                    return resposta.json(); // Processa a resposta como JSON
+                } else {
+                    throw new Error("Resposta não está OK");
+                }
+            })
+            .then(function (dados) {
+                resultadoElo = dados; 
+                console.log(resultadoElo);
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 

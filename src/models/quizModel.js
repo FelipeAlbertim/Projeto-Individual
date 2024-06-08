@@ -8,7 +8,7 @@ function cadastrar(idUsuario, tempoQuiz, pontos) {
     return database.executar(instrucao);
 }
 
-function listar(idUsuario) {
+function buscarTentativaTempo(idUsuario) {
     var instrucao = `
     select min(tempoTentativa) as 'minTempo',
         avg(tempoTentativa) as 'mediaTempo',
@@ -21,13 +21,21 @@ function listar(idUsuario) {
     from tentativa
     where fkQuiz = 1; 
     `
-    ;
+        ;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
+function buscarCriteriosElo() {
+    var instrucao = `
+    select * from elo
+    `
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
 
 module.exports = {
-    listar,
+    buscarTentativaTempo,
+    buscarCriteriosElo,
     cadastrar
 };

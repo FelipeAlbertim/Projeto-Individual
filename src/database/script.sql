@@ -1,6 +1,6 @@
-create database valorant_club2;
+create database valorant_club;
 
-use valorant_club2;
+use valorant_club;
 
 create table elo(
 idElo int auto_increment primary key,

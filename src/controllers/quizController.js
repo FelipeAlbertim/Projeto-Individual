@@ -13,12 +13,13 @@ function cadastrar(req, res) {
     })
 }
 
-function listar(req, res) {
+function buscarTentativaTempo(req, res) {
+    
     var idUsuario = req.params.idUsuario;
 
     console.log(`Recuperando o idUsuario ${idUsuario}`);
 
-    quizModel.listar(idUsuario).then(function (resultado) {
+    quizModel.buscarTentativaTempo(idUsuario).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -31,8 +32,21 @@ function listar(req, res) {
     });
 }
 
+function buscarCriteriosElo(req,res){
+    quizModel.buscarCriteriosElo().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 module.exports = {
-    listar,
+    buscarTentativaTempo,
+    buscarCriteriosElo,
     cadastrar
 }
