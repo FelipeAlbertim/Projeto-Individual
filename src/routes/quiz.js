@@ -15,4 +15,8 @@ router.get("/buscarCriteriosElo", function (req, res) {
     quizController.buscarCriteriosElo(req, res);
 });
 
+router.get("/atualizarEloUsuario/:fkElo/:idEloTentativa", function (req, res) {
+    quizController.atualizarEloUsuario(req, res);
+});
+
 module.exports = router;

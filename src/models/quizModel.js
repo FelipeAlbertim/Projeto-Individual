@@ -34,8 +34,17 @@ function buscarCriteriosElo() {
     return database.executar(instrucao);
 }
 
+function atualizarEloUsuario(fkElo,idUsuario){
+    var instrucao = `
+    update usuario set fkElo = ${fkElo} where idUsuario = ${idUsuario};
+    `
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     buscarTentativaTempo,
     buscarCriteriosElo,
+    atualizarEloUsuario,
     cadastrar
 };

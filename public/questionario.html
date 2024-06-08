@@ -129,6 +129,35 @@
 </html>
 
 <script>
+
+    span_nome.innerHTML = sessionStorage.NOME_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var idElo = 0
+
+    // Variaveis de controle de respostas
+    var respostaSelecionada = null;
+    var textoRespostaSelecionada = null;
+    var textoRespostaCorreta = ""
+   
+    
+    // Variaveis de controle de tempo para grafico
+    var tempoSegundos = 0
+    var fazendoQuiz = false
+    var tempoInicioQuiz = 0;
+    var totalPerguntas = 0
+    var perguntaAtual = 0;
+    var tempoInicioPergunta = 0;
+    var acertos = 0
+    var listaDiferencaTempo = []
+    var tempoFimPergunta = 0;
+    var tempoTotalQuiz = 0
+    var counter;
+
+    // Variaveis de resultado de consultas para usar em outras funções
+    var resultadoTempo = []
+    var resultadoElo = {};
+
+
     function mudaCor(respostaId) {
         respostaSelecionada = respostaId;
         textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
@@ -400,6 +429,8 @@
                 if (resposta.ok) {
                     console.log(resposta)
                     obterDadosGraficoTempo(idUsuario)
+                    buscarElo()
+
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -409,8 +440,6 @@
             });
 
         return false;
-
-
     }
 
     function obterDadosGraficoTempo(idUsuario) {
@@ -438,8 +467,7 @@
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
     }
-
-    var resultadoElo = {};
+    
     function buscarElo() {
         fetch("/quiz/buscarCriteriosElo", {
             method: "GET",
@@ -449,37 +477,46 @@
                     console.log("select deu certo");
                     return resposta.json(); // Processa a resposta como JSON
                 } else {
-                    throw new Error("Resposta não está OK");
+                    throw new Error("Erro ai paizão");
                 }
             })
             .then(function (dados) {
-                resultadoElo = dados; 
+                resultadoElo = dados;
                 console.log(resultadoElo);
+
+                for (var index = 0; index <= resultadoElo.length; index++) {
+                    if (acertos >= resultadoElo[index].requisitoMinimoAcerto && tempoTotalQuiz <= resultadoElo[index].requisitoMaximoTempo) {
+                        console.log(resultadoElo[index].nomeElo)
+
+                        idElo = resultadoElo[index].idElo
+                        break
+                    }
+                }
+
+                atualizarEloUsuario(idElo, idUsuario)
+
             })
             .catch(function (erro) {
                 console.log(`#ERRO: ${erro}`);
             });
     }
 
-
-    span_nome.innerHTML = sessionStorage.NOME_USUARIO;
-
-    var idUsuario = sessionStorage.ID_USUARIO;
-
-    var tempoSegundos = 0
-    var tempoInicioQuiz = 0;
-    var fazendoQuiz = false
-    var respostaSelecionada = null;
-    var textoRespostaSelecionada = null;
-    var textoRespostaCorreta = ""
-    var counter;
-    var totalPerguntas = 0
-    var perguntaAtual = 0;
-    var tempoInicioPergunta = 0;
-    var acertos = 0
-    var listaDiferencaTempo = []
-    var tempoFimPergunta = 0;
-    var tempoTotalQuiz = 0
-    var resultadoTempo = []
+    function atualizarEloUsuario(fkElo, idUsuario) {
+        fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Erro ao buscar dados');
+                }
+            })
+            .then(function (data) {
+                console.log(`Dados recebidos: ${JSON.stringify(data)}`);
+                alert(`funcionou !`)
+            })
+            .catch(function (error) {
+                console.error(`Erro na solicitação: ${error.message}`);
+            });
+    }
 
 </script>

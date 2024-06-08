@@ -32,6 +32,26 @@ function buscarTentativaTempo(req, res) {
     });
 }
 
+function atualizarEloUsuario(req, res) {
+    var fkElo = req.params.fkElo;
+    var idEloTentativa = req.params.idEloTentativa;
+
+    quizModel.atualizarEloUsuario(fkElo,idEloTentativa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o update: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+
+}
+
 function buscarCriteriosElo(req,res){
     quizModel.buscarCriteriosElo().then(function (resultado) {
         if (resultado.length > 0) {
@@ -45,8 +65,11 @@ function buscarCriteriosElo(req,res){
     });
 }
 
+
+
 module.exports = {
     buscarTentativaTempo,
     buscarCriteriosElo,
+    atualizarEloUsuario,
     cadastrar
 }
