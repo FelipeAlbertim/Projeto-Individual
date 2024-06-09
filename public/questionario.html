@@ -138,8 +138,8 @@
     var respostaSelecionada = null;
     var textoRespostaSelecionada = null;
     var textoRespostaCorreta = ""
-   
-    
+
+
     // Variaveis de controle de tempo para grafico
     var tempoSegundos = 0
     var fazendoQuiz = false
@@ -155,7 +155,10 @@
 
     // Variaveis de resultado de consultas para usar em outras funções
     var resultadoTempo = []
-    var resultadoElo = {};
+    var resultadoElo_nomeElo = []
+    var resultadoElo_qtdUsuario = []
+
+    var comparativoElos = {};
 
 
     function mudaCor(respostaId) {
@@ -262,6 +265,149 @@
             console.log(`Quantidade acertos: ${acertos}`);
             atualizarPergunta();
         }
+    }
+
+    function inserirTentativa() {
+
+        fetch("/quiz/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkUsuarioServer: idUsuario,
+                tempoTentativaServer: tempoTotalQuiz,
+                pontuacaoServer: acertos
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log(resposta)
+                    obterDadosGraficoTempo(idUsuario)
+                    buscarElo()
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+
+    function obterDadosGraficoTempo(idUsuario) {
+
+        fetch(`/quiz/buscarTentativaTempo/${idUsuario}`).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                    console.log(`CONTEUDO ANTES DE MANDAR PARA A RESPOSTA - MINIMO DE TEMPO ${JSON.stringify(resposta[0])}`)
+
+                    resultadoTempo.push(resposta[0].minTempo)
+                    resultadoTempo.push(resposta[0].mediaTempo)
+                    resultadoTempo.push(resposta[0].tentativaTempo)
+                    resultadoTempo.push(resposta[0].maxTempo)
+                    console.log(resultadoTempo)
+                    exibiGraficoComparativo()
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function buscarElo() {
+        fetch("/quiz/buscarCriteriosElo", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    console.log("select deu certo");
+                    return resposta.json(); // Processa a resposta como JSON
+                } else {
+                    throw new Error("Erro ai paizão");
+                }
+            })
+            .then(function (dados) {
+                comparativoElos = dados;
+                console.log(comparativoElos);
+
+                for (var index = 0; index <= comparativoElos.length; index++) {
+                    if (acertos >= comparativoElos[index].requisitoMinimoAcerto && tempoTotalQuiz <= comparativoElos[index].requisitoMaximoTempo) {
+                        console.log(comparativoElos[index].nomeElo)
+
+                        idElo = comparativoElos[index].idElo
+                        break
+                    }
+                }
+
+                atualizarEloUsuario(idElo, idUsuario)
+
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+
+    function playersPorElo(){
+        fetch("/quiz/playersPorElo", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    console.log("RESPOSTA DE PLAYER POR ELO OK");
+                    return resposta.json(); // Processa a resposta como JSON
+                } else {
+                    throw new Error("Erro ai paizão");
+                }
+            })
+            .then(function (resposta) {
+                console.log(resposta);
+
+                
+                for (var index = 0; index <= resposta.length; index++) {
+                    
+                    resultadoElo_nomeElo.push( resposta[index].nomeElo )
+                    resultadoElo_qtdUsuario.push( resposta[index].qtdUsuario )
+                    
+                }
+
+                
+
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+            
+    }
+
+
+    function atualizarEloUsuario(fkElo, idUsuario) {
+        fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Erro ao buscar dados');
+                }
+            })
+            .then(function (data) {
+                console.log(`Dados recebidos: ${JSON.stringify(data)}`);
+                alert(`funcionou !`)
+                playersPorElo()
+            })
+            .catch(function (error) {
+                console.error(`Erro na solicitação: ${error.message}`);
+            });
     }
 
     function exibiGraficoResultadoTentativa() {
@@ -385,10 +531,10 @@
         new Chart(comparativoGlobal1, {
             type: 'pie',
             data: {
-                labels: ['Radiante', 'Imortal', 'Diamante', 'Ouro', 'Prata'],
+                labels: resultadoElo_nomeElo,
                 datasets: [{
                     label: 'Jogadores',
-                    data: [1, 4, 9, 6, 3],
+                    data: resultadoElo_qtdUsuario,
                     borderWidth: 1
                 }]
             },
@@ -410,113 +556,6 @@
         });
     }
 
-    function inserirTentativa() {
 
-        fetch("/quiz/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                fkUsuarioServer: idUsuario,
-                tempoTentativaServer: tempoTotalQuiz,
-                pontuacaoServer: acertos
-            }),
-        })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-                    console.log(resposta)
-                    obterDadosGraficoTempo(idUsuario)
-                    buscarElo()
-
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
-
-        return false;
-    }
-
-    function obterDadosGraficoTempo(idUsuario) {
-
-        fetch(`/quiz/buscarTentativaTempo/${idUsuario}`).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                    console.log(`CONTEUDO ANTES DE MANDAR PARA A RESPOSTA - MINIMO DE TEMPO ${JSON.stringify(resposta[0])}`)
-
-                    resultadoTempo.push(resposta[0].minTempo)
-                    resultadoTempo.push(resposta[0].mediaTempo)
-                    resultadoTempo.push(resposta[0].tentativaTempo)
-                    resultadoTempo.push(resposta[0].maxTempo)
-                    console.log(resultadoTempo)
-                    exibiGraficoComparativo()
-
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
     
-    function buscarElo() {
-        fetch("/quiz/buscarCriteriosElo", {
-            method: "GET",
-        })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    console.log("select deu certo");
-                    return resposta.json(); // Processa a resposta como JSON
-                } else {
-                    throw new Error("Erro ai paizão");
-                }
-            })
-            .then(function (dados) {
-                resultadoElo = dados;
-                console.log(resultadoElo);
-
-                for (var index = 0; index <= resultadoElo.length; index++) {
-                    if (acertos >= resultadoElo[index].requisitoMinimoAcerto && tempoTotalQuiz <= resultadoElo[index].requisitoMaximoTempo) {
-                        console.log(resultadoElo[index].nomeElo)
-
-                        idElo = resultadoElo[index].idElo
-                        break
-                    }
-                }
-
-                atualizarEloUsuario(idElo, idUsuario)
-
-            })
-            .catch(function (erro) {
-                console.log(`#ERRO: ${erro}`);
-            });
-    }
-
-    function atualizarEloUsuario(fkElo, idUsuario) {
-        fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Erro ao buscar dados');
-                }
-            })
-            .then(function (data) {
-                console.log(`Dados recebidos: ${JSON.stringify(data)}`);
-                alert(`funcionou !`)
-            })
-            .catch(function (error) {
-                console.error(`Erro na solicitação: ${error.message}`);
-            });
-    }
-
 </script>

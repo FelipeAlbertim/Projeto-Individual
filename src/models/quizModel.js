@@ -34,6 +34,14 @@ function buscarCriteriosElo() {
     return database.executar(instrucao);
 }
 
+function playersPorElo() {
+    var instrucao = `
+    select nomeElo, count(idUsuario) as qtdUsuario from usuario join elo on fkElo = idElo group by idElo;
+    `
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 function atualizarEloUsuario(fkElo,idUsuario){
     var instrucao = `
     update usuario set fkElo = ${fkElo} where idUsuario = ${idUsuario};
@@ -45,6 +53,7 @@ function atualizarEloUsuario(fkElo,idUsuario){
 module.exports = {
     buscarTentativaTempo,
     buscarCriteriosElo,
+    playersPorElo,
     atualizarEloUsuario,
     cadastrar
 };
