@@ -107,13 +107,29 @@
                 <h1> 🫵 Você X Mundo 🌎 </h1>
             </div>
 
-            <div class="graficos1">
+            <div class="graficos1" style="border: solid 5px maroon;">
 
-                <div id="grafico_comparativo_tempo">
-                    <canvas id="comparativoTempo"></canvas>
+                <div id="elo_grafico"
+                    style="display: flex;flex-direction: column;height: 100%; border: solid 5px cyan; width: 50%; align-items: center; justify-content: center;gap: 2rem;">
+
+                    <div id="seuElo"
+                        style="display: flex;flex-direction: column;border: solid 5px purple;height: 45%;width: 40%;align-items: center;justify-content: center;gap: 1rem;">
+                        <h1 style="font-size: 22px;color: white;">
+                            Olá <span id="nomeUsuarioRanking" style="color: crimson;font-size: 22px;">FELIPE</span></h1>
+                        <h2 style="display: flex;align-items: center;justify-content: center;font-size: 16px;align-items: center;">
+                            O seu elo é:
+                            <span id="eloUsuario" style="color: red;font-weight: bold; font-size: 24px;margin-left: 8px;"> <!-- eloUsuario -->
+                            </span>
+                        </h2>
+                        <img src="assets/imgs/radiante-icone.png" alt="" style="width: 100px;height: 100px;">
+                        <p id="posicaoElo" style="color: white;">Sua posição no ranking dos jogadores do seu elo é:</p>
+                    </div>
+
+                    <div id="grafico_comparativo_tempo" style="border: solid 5px blue;width: 100%;height: 40%;">
+                        <canvas id="comparativoTempo"></canvas>
+                    </div>
                 </div>
-
-                <div id="grafico_comparativo_elo">
+                <div id="grafico_comparativo_elo" style="border: solid 5px green;">
                     <canvas id="comparativoGlobal1"></canvas>
                 </div>
             </div>
@@ -130,9 +146,14 @@
 
 <script>
 
-    span_nome.innerHTML = sessionStorage.NOME_USUARIO;
     var idUsuario = sessionStorage.ID_USUARIO;
+    var nomeUsuario = sessionStorage.NOME_USUARIO;
+
+    span_nome.innerHTML = nomeUsuario
+    nomeUsuarioRanking.innerHTML = nomeUsuario
+    
     var idElo = 0
+    var nomeElo = ""
 
     // Variaveis de controle de respostas
     var respostaSelecionada = null;
@@ -268,132 +289,134 @@
     }
 
     function inserirTentativa() {
-    fetch("/quiz/cadastrar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            fkUsuarioServer: idUsuario,
-            tempoTentativaServer: tempoTotalQuiz,
-            pontuacaoServer: acertos
-        }),
-    })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            console.log("Tentativa inserida com sucesso");
-            return obterDadosGraficoTempo(idUsuario);
-        } else {
-            throw new Error("Houve um erro ao tentar realizar o cadastro!");
-        }
-    })
-    .then(function () {
-        return buscarElo();
-    })
-    .catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
-    });
-
-    return false;
-}
-
-
-function obterDadosGraficoTempo(idUsuario) {
-    return fetch(`/quiz/buscarTentativaTempo/${idUsuario}`)
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Nenhum dado encontrado ou erro na API');
-            }
+        fetch("/quiz/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkUsuarioServer: idUsuario,
+                tempoTentativaServer: tempoTotalQuiz,
+                pontuacaoServer: acertos
+            }),
         })
-        .then(function (resposta) {
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            resultadoTempo = [
-                resposta[0].minTempo,
-                resposta[0].mediaTempo,
-                resposta[0].tentativaTempo,
-                resposta[0].maxTempo
-            ];
-            console.log(resultadoTempo);
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    console.log("Tentativa inserida com sucesso");
+                    return obterDadosGraficoTempo(idUsuario);
+                } else {
+                    throw new Error("Houve um erro ao tentar realizar o cadastro!");
+                }
+            })
+            .then(function () {
+                return buscarElo();
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+
+        return false;
+    }
+
+    function obterDadosGraficoTempo(idUsuario) {
+        return fetch(`/quiz/buscarTentativaTempo/${idUsuario}`)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resultadoTempo = [
+                    resposta[0].minTempo,
+                    resposta[0].mediaTempo,
+                    resposta[0].tentativaTempo,
+                    resposta[0].maxTempo
+                ];
+                console.log(resultadoTempo);
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function buscarElo() {
+        return fetch("/quiz/buscarCriteriosElo", {
+            method: "GET",
         })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw new Error("Erro ao buscar critérios de elo");
+                }
+            })
+            .then(function (dados) {
+                comparativoElos = dados;
+                console.log(comparativoElos);
 
-function buscarElo() {
-    return fetch("/quiz/buscarCriteriosElo", {
-        method: "GET",
-    })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            return resposta.json();
-        } else {
-            throw new Error("Erro ao buscar critérios de elo");
-        }
-    })
-    .then(function (dados) {
-        comparativoElos = dados;
-        console.log(comparativoElos);
+                for (var index = 0; index < comparativoElos.length; index++) {
+                    if (acertos >= comparativoElos[index].requisitoMinimoAcerto && tempoTotalQuiz <= comparativoElos[index].requisitoMaximoTempo) {
+                        idElo = comparativoElos[index].idElo;
+                        nomeElo = comparativoElos[index].nomeElo;
+                        eloUsuario.innerHTML = nomeElo
+                        break;
+                    }
+                }
 
-        for (var index = 0; index < comparativoElos.length; index++) {
-            if (acertos >= comparativoElos[index].requisitoMinimoAcerto && tempoTotalQuiz <= comparativoElos[index].requisitoMaximoTempo) {
-                idElo = comparativoElos[index].idElo;
-                break;
-            }
-        }
+                return atualizarEloUsuario(idElo, idUsuario);
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+        
+    }
 
-        return atualizarEloUsuario(idElo, idUsuario);
-    })
-    .catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
-    });
-}
-
-function playersPorElo() {
-    return fetch("/quiz/playersPorElo", {
-        method: "GET",
-    })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            return resposta.json();
-        } else {
-            throw new Error("Erro ao buscar players por elo");
-        }
-    })
-    .then(function (resposta) {
-        resultadoElo_nomeElo = resposta.map(e => e.nomeElo);
-        resultadoElo_qtdUsuario = resposta.map(e => e.qtdUsuario);
-        console.log(`Elos: ${resultadoElo_nomeElo}`);
-        console.log(`Qtd Usuários: ${resultadoElo_qtdUsuario}`);
-    })
-    .catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
-    });
-}
+    function playersPorElo() {
+        return fetch("/quiz/playersPorElo", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw new Error("Erro ao buscar players por elo");
+                }
+            })
+            .then(function (resposta) {
+                resultadoElo_nomeElo = resposta.map(e => e.nomeElo);
+                resultadoElo_qtdUsuario = resposta.map(e => e.qtdUsuario);
+                console.log(`Elos: ${resultadoElo_nomeElo}`);
+                console.log(`Qtd Usuários: ${resultadoElo_qtdUsuario}`);
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
 
 
     function atualizarEloUsuario(fkElo, idUsuario) {
-    return fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Erro ao atualizar elo do usuário');
-            }
-        })
-        .then(function (data) {
-            console.log(`Elo atualizado: ${JSON.stringify(data)}`);
-            return playersPorElo();
-        })
-        .then(function () {
-            exibiGraficoComparativo();
-        })
-        .catch(function (error) {
-            console.error(`Erro na atualização de elo: ${error.message}`);
-        });
-}
+        return fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Erro ao atualizar elo do usuário');
+                }
+            })
+            .then(function (data) {
+                console.log(`Elo atualizado: ${JSON.stringify(data)}`);
+                return playersPorElo();
+            })
+            .then(function () {
+                exibiGraficoComparativo();
+            })
+            .catch(function (error) {
+                console.error(`Erro na atualização de elo: ${error.message}`);
+            });
+    }
 
     function exibiGraficoResultadoTentativa() {
         var ctxAcertos = document.getElementById('dash_acertos');
@@ -461,85 +484,85 @@ function playersPorElo() {
     }
 
     function exibiGraficoComparativo() {
-    fim.style.display = "none";
-    introducao.style.display = "none";
-    questao.style.display = "none";
-    graficosComparativos.style.display = "flex";
+        fim.style.display = "none";
+        introducao.style.display = "none";
+        questao.style.display = "none";
+        graficosComparativos.style.display = "flex";
 
-    const comparativoTempo = document.getElementById('comparativoTempo');
+        const comparativoTempo = document.getElementById('comparativoTempo');
 
-    new Chart(comparativoTempo, {
-        type: 'bar',
-        data: {
-            labels: ['Mínimo', 'Tempo Médio', 'Seu Tempo', 'Máximo'],
-            datasets: [{
-                label: 'Gráfico de tempo médio (segundos)',
-                data: resultadoTempo,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        color: 'white'
+        new Chart(comparativoTempo, {
+            type: 'bar',
+            data: {
+                labels: ['Mínimo', 'Tempo Médio', 'Seu Tempo', 'Máximo'],
+                datasets: [{
+                    label: 'Gráfico de tempo médio (segundos)',
+                    data: resultadoTempo,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
                     },
-                    ticks: {
-                        color: 'white'
+                    x: {
+                        title: {
+                            display: true,
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
                     }
                 },
-                x: {
-                    title: {
-                        display: true,
-                        color: 'white'
-                    },
-                    ticks: {
-                        color: 'white'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        color: 'white'
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
                     }
                 }
             }
-        }
-    });
+        });
 
-    const comparativoGlobal1 = document.getElementById('comparativoGlobal1');
+        const comparativoGlobal1 = document.getElementById('comparativoGlobal1');
 
-    new Chart(comparativoGlobal1, {
-        type: 'pie',
-        data: {
-            labels: resultadoElo_nomeElo,
-            datasets: [{
-                label: 'Jogadores',
-                data: resultadoElo_qtdUsuario,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    display: false
-                }
+        new Chart(comparativoGlobal1, {
+            type: 'pie',
+            data: {
+                labels: resultadoElo_nomeElo,
+                datasets: [{
+                    label: 'Jogadores',
+                    data: resultadoElo_qtdUsuario,
+                    borderWidth: 1
+                }]
             },
-            plugins: {
-                legend: {
-                    labels: {
-                        color: 'white'
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        display: false
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
                     }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
 
-    
+
 </script>

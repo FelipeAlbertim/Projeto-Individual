@@ -31,8 +31,10 @@ senha varchar(255),
 historia longtext,
 foreign key (fkElo) references elo(idElo));
 
-insert into usuario values 
-(default,5,'Makita#wap','Felipe Albertim','felipe@gmail.com','123','bla bla bla bla bla bla bla ');
+insert into usuario values
+(default,null,'Makita#wap','Felipe Albertim','felipe@gmail.com','123','bla bla');
+
+select * from usuario join elo on fkElo = idElo;
 
 create table quiz(
 idQUiz int auto_increment primary key,
@@ -128,10 +130,6 @@ dataHoraTentativa datetime default current_timestamp,
 tempoTentativa decimal(10,3),
 pontuacao int);
 
-insert into tentativa values
-(default,1,1,default,20,6),
-(default,1,1,default,80,6);
-
 create table ranking(
 fkUsuario int,
 fkQuiz int,
@@ -145,29 +143,45 @@ foreign key (fkPergunta) references pergunta(idPergunta),
 foreign key (fkResposta) references resposta(idResposta),
 primary key (fkUsuario,fkQuiz,fkTentativa,fkPergunta,fkResposta));
 
-insert into ranking values
-(1,1,1,1,2),
-(1,1,1,2,3),
-(1,1,1,3,3),
-(1,1,1,4,4),
-(1,1,1,5,1),
-(1,1,1,6,2),
-(1,1,1,7,3),
-(1,1,1,8,1),
-(1,1,1,9,1),
-(1,1,1,10,4);
-
 /*	INÍCIO DOS SELECT's	*/
 
-select idTentativa as Tentativa,
-	usuario.nome as 'Nome do usuario',
-    quiz.nomeQuiz as 'Nome do Quiz',
-    dataHoraTentativa as 'Data da Tentativa',
-    tempoTentativa as 'Tempo da Tentativa (SEGUNDOS)',
-    pontuacao as 'Pontos'
-    from tentativa
-join usuario on tentativa.fkUsuario = idUsuario
-join quiz on tentativa.fkQuiz = idQuiz;
+
+select 
+    tentativa.fkUsuario as idUsuario,
+    usuario.nome as NomeUsuario,
+    elo.nomeElo as Elo,
+    tentativa.pontuacao as Pontuacao,
+    tentativa.tempoTentativa as Tempo,
+    tentativa.dataHoraTentativa as DataHora,
+    rank() over (partition by tentativa.fkQuiz order by tentativa.pontuacao desc, tentativa.tempoTentativa asc, tentativa.dataHoraTentativa asc) as PosicaoRanking
+from 
+    (
+        select 
+            fkUsuario,
+            fkQuiz,
+            max(dataHoraTentativa) as ultimaTentativa
+        from 
+            tentativa
+        group by 
+            fkUsuario, fkQuiz
+    ) as ultimas_tentativas
+join 
+    tentativa on ultimas_tentativas.fkUsuario = tentativa.fkUsuario and ultimas_tentativas.fkQuiz = tentativa.fkQuiz and ultimas_tentativas.ultimaTentativa = tentativa.dataHoraTentativa
+join 
+    usuario on tentativa.fkUsuario = usuario.idUsuario
+join 
+    elo on usuario.fkElo = elo.idElo
+order by 
+    tentativa.fkQuiz, PosicaoRanking;
+
+
+    
+    
+select * from tentativa ;
+
+
+
+
 
 -- inserirResultadoQuiz(acertos,tempo,idUsuario)
 
@@ -210,4 +224,15 @@ select min(tempoTentativa) as 'minTempo',
         max(tempoTentativa) as 'maxTempo'
     from tentativa
     where fkQuiz = 1;
+	
+    use valorant_club;
+    select email,senha from usuario where email = 'felipe@gmail.com';
     
+    select * from usuario;
+    select * from tentativa;
+    
+   
+    
+    
+    
+select nomeElo, count(idUsuario) as qtdUsuario from usuario join elo on fkElo = idElo group by idElo;
