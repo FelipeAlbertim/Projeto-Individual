@@ -312,7 +312,7 @@
                 console.log("Resposta do servidor:", resposta);
                 if (resposta.ok) {
                     console.log("Tentativa inserida com sucesso");
-                    listaRanking();
+                    
                 } else {
                     throw new Error("Houve um erro ao inserir tentativa");
                 }
@@ -409,25 +409,29 @@
     }
 
     function atualizarEloUsuario(fkElo, idUsuario) {
-        return fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Erro ao atualizar elo do usuário');
-                }
-            })
-            .then(function (data) {
-                console.log(`Elo atualizado: ${JSON.stringify(data)}`);
-                return playersPorElo();
-            })
-            .then(function () {
-                exibiGraficoComparativo();
-            })
-            .catch(function (error) {
-                console.error(`Erro na atualização de elo: ${error.message}`);
-            });
-    }
+    return fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Erro ao atualizar elo do usuário');
+            }
+        })
+        .then(function (data) {
+            console.log(`Elo atualizado: ${JSON.stringify(data)}`);
+            return playersPorElo();
+        })
+        .then(function () {
+            listaRanking();
+        })
+        .then(function () {
+            exibiGraficoComparativo();
+        })
+        .catch(function (error) {
+            console.error(`Erro na atualização de elo: ${error.message}`);
+        });
+}
+
 
     function exibiGraficoResultadoTentativa() {
         var ctxAcertos = document.getElementById('dash_acertos');
@@ -499,6 +503,7 @@
         introducao.style.display = "none";
         questao.style.display = "none";
         graficosComparativos.style.display = "flex";
+
 
         const comparativoTempo = document.getElementById('comparativoTempo');
 
@@ -574,7 +579,6 @@
         });
     }
 
-
     function listaRanking() {
         return fetch("/quiz/listaRanking", {
             method: "GET",
@@ -589,7 +593,7 @@
             .then(function (resposta) {
                 ranking = resposta;
                 console.log(`resposta: ${resposta}`);
-                buscaPosicaoUsuario();
+                buscaPosicaoUsuario()         
             })
             .catch(function (erro) {
                 console.log(`#ERRO: ${erro}`);
