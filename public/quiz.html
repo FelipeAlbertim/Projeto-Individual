@@ -85,6 +85,7 @@
             <div id="rank" class="alinha">
                 <h2 style="font-size: 20px;margin-bottom: 20px;">MELHORES JOGADORES</h2>
                 <ul id="rankingList"></ul>
+                <div id="mensagemRanking"></div>
             </div>
         </div>
     </div>
@@ -99,16 +100,18 @@
     var posicaoRankingUsuario = 0;
 
     function inicializarPagina() {
-        if (emailUsuario == null || nomeUsuario == null || idUsuario == null) {
-            aparecerBotaoCadastro();
-            status_usuario.innerHTML = '<span style="font-size:16px;font-weight: bold"> Venha fazer parte da comunidade !</span>'
-            mensagem_usuario.innerHTML = '<span style="font-size:18px;color:white;"> Clique <a href="cadastro.html" style="font-size:20px;color:#FF4655;">aqui</a> para fazer cadastro </span>';
-            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/sem-ranque.webp" alt="Sem Ranque">`;
-        } else {
-            aparecerBotaoSair();
-        }
-        listaRanking();
+    if (emailUsuario == null || nomeUsuario == null || idUsuario == null) {
+        aparecerBotaoCadastro();
+        status_usuario.innerHTML = '<span style="font-size:16px;font-weight: bold"> Venha fazer parte da comunidade !</span>'
+        mensagem_usuario.innerHTML = '<span style="font-size:18px;color:white;"> Clique <a href="cadastro.html" style="font-size:20px;color:#FF4655;">aqui</a> para fazer cadastro </span>';
+        img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/sem-ranque.webp" alt="Sem Ranque">`;
+    } else {
+        aparecerBotaoSair();
     }
+    listaRanking().then(() => {
+        buscaPosicaoUsuario();
+    });
+}
 
     function aparecerBotaoCadastro() {
         btn_cadastro.style.display = 'block';
@@ -153,19 +156,27 @@
         status_usuario.innerHTML = `Olá <span style="color:red;">${nomeUsuario}</span>`;
         mensagem_usuario.innerHTML = `Você está em ${posicaoRankingUsuario}° lugar`;
         img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/radiante-icone.png" alt="Radiante">`;
+
+        listaTop3();
     }
+
 
     function listaTop3() {
-        var ul = document.getElementById("rankingList");
+    var ul = rankingList
 
-        ul.innerHTML = "";
+    ul.innerHTML = "";
 
-        for (var index = 0; index < 10; index++) {
-            var li = document.createElement("li");
-            li.textContent = (index + 1) + "° - " + ranking[index].NomeUsuario;
-            ul.appendChild(li);
-        }
+    for (var index = 0; index < 10; index++) {
+        var li = document.createElement("li");
+        li.textContent = (index + 1) + "° - " + ranking[index].NomeUsuario;
+        ul.appendChild(li);
     }
+
+    if (posicaoRankingUsuario === 0 && ranking.length > 0) {
+        mensagem_usuario.innerHTML = 'Clique em jogar agora para participar do ranking!';
+    }
+}
+
 
 </script>
 
