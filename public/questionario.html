@@ -309,9 +309,10 @@
             }),
         })
             .then(function (resposta) {
+                console.log("Resposta do servidor:", resposta);
                 if (resposta.ok) {
                     console.log("Tentativa inserida com sucesso");
-                    return listaRanking();
+                    listaRanking();
                 } else {
                     throw new Error("Houve um erro ao inserir tentativa");
                 }
@@ -594,7 +595,7 @@
                 console.log(`#ERRO: ${erro}`);
             });
     }
- 
+    
     function buscaPosicaoUsuario() {
         for (var index = 0; index < ranking.length; index++) {
             if (ranking[index].idUsuario == idUsuario) {

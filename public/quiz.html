@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BT">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant's Club | Quiz</title>
     <link rel="stylesheet" href="css/style-quiz.css">
-
     <script src="./js/sessao.js"></script>
-
     <link rel="icon" href="assets/icon/icon.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,17 +18,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+
+    <style>
+        li {
+            padding: 5px;
+        }
+
+        ul {
+            padding: 5px;
+        }
+    </style>
 </head>
 
-
-<body>
+<body onload="inicializarPagina()">
     <div id="nav_bar">
         <div id="logo">
             <div id="foto">
-                <img src="assets/icon/logo.png">
+                <img src="assets/icon/logo.png" alt="Logo">
             </div>
             <div id="valorant">
-                <img src="assets/icon/valorant.png">
+                <img src="assets/icon/valorant.png" alt="Valorant">
             </div>
         </div>
 
@@ -63,59 +70,103 @@
                     <p class="textQuiz">Jogar agora</p>
                     <div class="img"></div>
                 </button>
-
             </div>
         </div>
-
 
         <div id="top-jogadores">
             <div id="eloUsuario">
                 <div class="alinha"
                     style="height: auto; width: 100%; display: flex;flex-direction: column; align-items: center; justify-content: center;">
-                    <p id="p_usuario" style="margin-bottom: 2rem;">voce não tem acesso</p>
+                    <p id="status_usuario" style="margin-bottom: 2rem;"></p>
                     <div id="img_usuario"></div>
-                    <p id="p_msg_usuario" style="margin-top: 2rem;">oi</p>
+                    <p id="mensagem_usuario" style="margin-top: 2rem;"></p>
                 </div>
-
             </div>
-            <h2 style="font-size: 20px;">MELHORES JOGADORES</h2>
-            <ul>
-                <li>1° - Player 1</li>
-                <li>2° - Player 2</li>
-                <li>3° - Player 3</li>
-            </ul>
-
+            <div id="rank" class="alinha">
+                <h2 style="font-size: 20px;margin-bottom: 20px;">MELHORES JOGADORES</h2>
+                <ul id="rankingList"></ul>
+            </div>
         </div>
     </div>
+</body>
 
-    </div>
+<script>
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var nomeUsuario = sessionStorage.NOME_USUARIO;
+    var emailUsuario = sessionStorage.EMAIL_USUARIO;
 
-    <script>
-        if (sessionStorage.EMAIL_USUARIO == null && sessionStorage.NOME_USUARIO == null) {
+    var ranking = [];
+    var posicaoRankingUsuario = 0;
+
+    function inicializarPagina() {
+        if (emailUsuario == null || nomeUsuario == null || idUsuario == null) {
             aparecerBotaoCadastro();
-            p_usuario.innerHTML = "Infelizmente você ainda não fez cadastro";
-            p_msg_usuario.innerHTML = "Clique aqui para fazer cadastro"
-        img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/sem-ranque.webp" alt="">`
+            status_usuario.innerHTML = '<span style="font-size:16px;font-weight: bold"> Venha fazer parte da comunidade !</span>'
+            mensagem_usuario.innerHTML = '<span style="font-size:18px;color:white;"> Clique <a href="cadastro.html" style="font-size:20px;color:#FF4655;">aqui</a> para fazer cadastro </span>';
+            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/sem-ranque.webp" alt="Sem Ranque">`;
         } else {
             aparecerBotaoSair();
-            p_usuario.innerHTML = `Olá <span style="color:red;"> ${sessionStorage.NOME_USUARIO}</span>`
-            p_msg_usuario.innerHTML = `Você está em ${1}° lugar`
-            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/radiante-icone.png" alt="">`
         }
+        listaRanking();
+    }
 
-        function aparecerBotaoCadastro() {
-            document.getElementById('btn_cadastro').style.display = 'block';
-            document.getElementById('btn_login').style.display = 'block';
+    function aparecerBotaoCadastro() {
+        btn_cadastro.style.display = 'block';
+        btn_login.style.display = 'block';
+    }
+
+    function aparecerBotaoSair() {
+        btn_sair.style.display = 'block';
+    }
+
+    function listaRanking() {
+        return fetch("/quiz/listaRanking", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw new Error("Erro ao buscar players por elo");
+                }
+            })
+            .then(function (resposta) {
+                ranking = resposta;
+                console.log(`resposta: ${resposta}`);
+                if (idUsuario) {
+                    buscaPosicaoUsuario();
+                }
+                listaTop3();
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+
+    function buscaPosicaoUsuario() {
+        for (var index = 0; index < ranking.length; index++) {
+            if (ranking[index].idUsuario == idUsuario) {
+                posicaoRankingUsuario = index + 1;
+                break;
+            }
         }
+        status_usuario.innerHTML = `Olá <span style="color:red;">${nomeUsuario}</span>`;
+        mensagem_usuario.innerHTML = `Você está em ${posicaoRankingUsuario}° lugar`;
+        img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/radiante-icone.png" alt="Radiante">`;
+    }
 
-        function aparecerBotaoSair() {
-            document.getElementById('btn_sair').style.display = 'block';
+    function listaTop3() {
+        var ul = document.getElementById("rankingList");
+
+        ul.innerHTML = "";
+
+        for (var index = 0; index < 10; index++) {
+            var li = document.createElement("li");
+            li.textContent = (index + 1) + "° - " + ranking[index].NomeUsuario;
+            ul.appendChild(li);
         }
+    }
 
-        function sumirBotaoSair() {
-            document.getElementById('btn_sair').style.display = 'none';
-        }        
-    </script>
-</body>
+</script>
 
 </html>
