@@ -5,16 +5,21 @@ use valorant_club;
 create table elo(
 idElo int auto_increment primary key,
 nomeElo varchar(45),
-requisitoAcerto int,
-requisitoTempo decimal(10,3)    
+requisitoMaximoAcerto int,
+requisitoMinimoAcerto int,
+requisitoMaximoTempo decimal(10,3),
+requisitoMinimoTempo decimal(10,3)
 );
 
 insert into elo values
-(default,'Prata',0,0),
-(default,'Platina',0,0),
-(default,'Ascendente',0,0),
-(default,'Imortal',0,0),
-(default,'Radiante',0,0);
+
+-- CRITÉRIOS DE CADA ELO
+
+(default,'Radiante',10,10,120,0), -- 10 acertos em menos de 2 minutos
+(default,'Imortal',10,9,180,0), -- 9 acertos em até 3 minutos
+(default,'Diamante',10,6,300,0), -- 6 acertos em até 5 minutos 
+(default,'Ouro',10,3,420,0), -- 3 acertos em até 7 minutos
+(default,'Prata',10,0,600,0); -- 0 acertos em até 10 minutos
 
 create table usuario (
 idUsuario int primary key auto_increment,
