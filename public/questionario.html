@@ -107,33 +107,36 @@
                 <h1> 🫵 Você X Mundo 🌎 </h1>
             </div>
 
-            <div class="graficos1" style="border: solid 5px maroon;">
+            <div class="graficos1">
 
                 <div id="elo_grafico"
-                    style="display: flex;flex-direction: column;height: 100%; border: solid 5px cyan; width: 50%; align-items: center; justify-content: center;gap: 2rem;">
+                    style="display: flex;flex-direction: column;height: 100%;  width: 50%; align-items: center; justify-content: center;gap: 2rem;">
 
                     <div id="seuElo"
-                        style="display: flex;flex-direction: column;border: solid 5px purple;height: 45%;width: 40%;align-items: center;justify-content: center;gap: 1rem;">
+                        style="border: solid 4px crimson;border-radius: 5px;background-color: rgb(15, 25, 35);display: flex;flex-direction: column;height: 45%;width: 60%;align-items: center;justify-content: center;gap: 1rem;">
                         <h1 style="font-size: 22px;color: white;">
                             Olá <span id="nomeUsuarioRanking" style="color: crimson;font-size: 22px;">FELIPE</span></h1>
-                        <h2 style="display: flex;align-items: center;justify-content: center;font-size: 16px;align-items: center;">
+                        <h2
+                            style="display: flex;align-items: center;justify-content: center;font-size: 16px;align-items: center;">
                             O seu elo é:
-                            <span id="eloUsuario" style="color: red;font-weight: bold; font-size: 24px;margin-left: 8px;"> <!-- eloUsuario -->
+                            <span id="eloUsuario"
+                                style="color: red;font-weight: bold; font-size: 24px;margin-left: 8px;">
+                                <!-- eloUsuario -->
                             </span>
                         </h2>
                         <img src="assets/imgs/radiante-icone.png" alt="" style="width: 100px;height: 100px;">
-                        <p id="posicaoElo" style="color: white;">Sua posição no ranking dos jogadores do seu elo é:</p>
+                        <p id="posicaoElo" style="color: white;">Você está em </p>
                     </div>
 
-                    <div id="grafico_comparativo_tempo" style="border: solid 5px blue;width: 100%;height: 40%;">
+                    <div id="grafico_comparativo_tempo" style="width: 100%;height: 55%;">
                         <canvas id="comparativoTempo"></canvas>
                     </div>
                 </div>
-                <div id="grafico_comparativo_elo" style="border: solid 5px green;">
+                <div id="grafico_comparativo_elo">
                     <canvas id="comparativoGlobal1"></canvas>
                 </div>
             </div>
-
+            <button> <a href="quiz.html">Quer fazer denovo? Clique Aqui !</a> </button>
         </div>
 
     </div>
@@ -151,7 +154,7 @@
 
     span_nome.innerHTML = nomeUsuario
     nomeUsuarioRanking.innerHTML = nomeUsuario
-    
+
     var idElo = 0
     var nomeElo = ""
 
@@ -180,6 +183,11 @@
     var resultadoElo_qtdUsuario = []
 
     var comparativoElos = {};
+
+    // Variavel para ranking
+
+    var ranking = {}
+    var posicaoRankingUsuario = 0
 
 
     function mudaCor(respostaId) {
@@ -303,10 +311,13 @@
             .then(function (resposta) {
                 if (resposta.ok) {
                     console.log("Tentativa inserida com sucesso");
-                    return obterDadosGraficoTempo(idUsuario);
+                    return listaRanking();
                 } else {
-                    throw new Error("Houve um erro ao tentar realizar o cadastro!");
+                    throw new Error("Houve um erro ao inserir tentativa");
                 }
+            })
+            .then(function () {
+                return obterDadosGraficoTempo(idUsuario);
             })
             .then(function () {
                 return buscarElo();
@@ -371,7 +382,7 @@
             .catch(function (erro) {
                 console.log(`#ERRO: ${erro}`);
             });
-        
+
     }
 
     function playersPorElo() {
@@ -395,7 +406,6 @@
                 console.log(`#ERRO: ${erro}`);
             });
     }
-
 
     function atualizarEloUsuario(fkElo, idUsuario) {
         return fetch(`/quiz/atualizarEloUsuario/${fkElo}/${idUsuario}`)
@@ -564,5 +574,35 @@
     }
 
 
+    function listaRanking() {
+        return fetch("/quiz/listaRanking", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw new Error("Erro ao buscar players por elo");
+                }
+            })
+            .then(function (resposta) {
+                ranking = resposta;
+                console.log(`resposta: ${resposta}`);
+                buscaPosicaoUsuario();
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+ 
+    function buscaPosicaoUsuario() {
+        for (var index = 0; index < ranking.length; index++) {
+            if (ranking[index].idUsuario == idUsuario) {
+                posicaoRankingUsuario = index + 1;
+                break;
+            }
+        }
+        posicaoElo.innerHTML += ` ${posicaoRankingUsuario}° lugar`;
+    }
 
 </script>

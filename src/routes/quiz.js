@@ -23,4 +23,8 @@ router.get("/atualizarEloUsuario/:fkElo/:idEloTentativa", function (req, res) {
     quizController.atualizarEloUsuario(req, res);
 });
 
+router.get("/listaRanking", function (req, res) {
+    quizController.listaRanking(req, res);
+});
+
 module.exports = router;
