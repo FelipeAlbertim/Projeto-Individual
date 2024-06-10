@@ -108,8 +108,30 @@ body {
     justify-content: end;
 }
 
+#rankingList{
+    height: 345px !important;
+    gap: 1rem !important;
+    overflow-y: scroll;
+    scrollbar-width: 25px;
+    
+}
+::-webkit-scrollbar {
+    width: 25px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #d4d4d4;
+    border-radius: 25px
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #FF4655;
+    border-radius: 25px
+  }
 #top-jogadores{
-    height:fit-content;
+    height: fit-content;
     width: 15%;
     display: flex;
     font-size: 22px;
@@ -130,20 +152,20 @@ body {
     transform: translate(-50% 50%);
     padding: 1rem;
     margin: 20px 0px;
+    
 }
 #top-jogadores li {
     background-color: #4e4e4e80;
     display: flex;
-    padding: 2px;
+    padding: 1rem;
     border-radius: 10px;
     height: 45px;
 }
 #top-jogadores ul {
-    height: auto;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    justify-content: center;
+    justify-content: start;
     gap: 8px;
 }
 #comecar{

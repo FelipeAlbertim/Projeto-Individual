@@ -6,8 +6,48 @@
 }
 
 body {
-    background-color: #23303C;
-    font-family: "Inter";
+    background-color: #0b1014;
+    font-family: "Inter";   
+ 
+  
+  
+}
+@keyframes mudarFundo {
+    0%{
+
+    } 50% {
+        background-position: 50% 50%;
+
+
+    } 100% {
+        background-position: 80% 80%;
+
+
+    }
+
+    
+}
+.fundo {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background-image: url(../assets/imgs/lotus.webp);
+    background-repeat: no-repeat;
+    background-size: 150%;
+    background-position: 0% 0%;
+    opacity: 0.4;
+    animation-name: mudarFundo;
+    animation-duration: 20s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+.frente {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  
 }
 
 /*  ----------------------  navbar -----------------------------------*/
@@ -59,6 +99,7 @@ body {
     max-width: 200px;
     height: auto;
 }
+
 
 #menu ul {
     list-style: none;
@@ -173,15 +214,17 @@ canvas {
 /*  ----------------------  questões -----------------------------------*/
 
 #questao {
-    border: solid 5px black;
+    border: solid 1px #fcfcfc;
+    font-size: 30px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 2rem;
     height: 100%;
     width: 80%;
-    gap: 40rem;
-    padding: 20px;
-    background-color: #333;
+    background-color: #0f19236b;
+    backdrop-filter: blur(10px);
     border-radius: 10px;
 }
 
@@ -192,6 +235,7 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 35px;
     display: flex;
     color: #fff;
     width: 100%;
@@ -208,51 +252,65 @@ canvas {
     gap: 2rem;
     align-items: center;
     justify-content: space-evenly;
+    width: 80%;
 }
 
 /*  ----------------------  cada resposta -----------------------------------*/
 .resposta {
     width: 25%;
-    height: 35vh;
+    height: 150px;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 4px solid blue;
+    flex-direction: column;
     color: #fff;
-    background-color: #555;
+    background-color: #151625d5;
     padding: 10px;
-    border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    border-radius: 10px;
 }
+.resposta.mudarCor::after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    background-color: #0080ff;
+    
+}
+/* document.getElementById(`Resposta_${respostaId}`).classList.toggle('mudarCor'); */
+
 
 .resposta:hover {
-    background-color: rgb(7, 15, 90);
+    background-color: #333;
 }
 
 /*  ----------------------  botão proxima pergunta -----------------------------------*/
 
 #proxima_pergunta {
-    width: 80%;
-    height: 15vh;
+    width: 100%;
+    height: 20vh;
     color: white;
-    background-color: #0F1923;
+    background-color: #d63139;
     border-radius: 5px;
     padding: 20px;
-    font-size: 20px;
+    font-size: 23px;
     font-weight: bolder;
-    margin-left: 10%;
-    margin-top: 5%;
+    cursor: pointer;
 }
 
 #proxima_pergunta:hover {
-    background-color: #0056b3;
+    background-color: #f1434c;
 }
 
 /*  ----------------------  div final -----------------------------------*/
 
 #fim {
-    border: solid 5px black;
+   
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -260,12 +318,15 @@ canvas {
     height: 100%;
     width: 80%;
     padding: 20px;
-    background-color: #333;
     border-radius: 10px;
     align-content: center;
 }
 
 .graficos {
+    border: solid 1px #fcfcfc !important;
+    background-color: #0f19236b !important;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,10 +335,8 @@ canvas {
     width: 100%;
     gap: 2.5rem;
     padding: 20px;
-    background-color: #333;
     border-radius: 10px;
     align-content: center;
-    /* border: solid 5px red; */
 }
 .graficos1 {
     display: flex;
@@ -287,25 +346,10 @@ canvas {
     width: 90%;
     gap: 2.5rem;
     padding: 20px;
-    background-color: #333;
+    background-color: #33333300;
     border-radius: 10px;
     align-content: center;
-    /* border: solid 5px red; */
 }
-
-/* .graficos1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 70%;
-    gap: 2.5rem;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 10px;
-    align-content: center;
-    border: solid 5px red;
-} */
 
 .dash {
     display: flex;
@@ -333,7 +377,6 @@ canvas {
     flex-direction: column;
     width: 40%;
     height: 90%;
-    /* border: solid 4px red; */
 }
 
 #acertos {
@@ -363,7 +406,7 @@ canvas {
 }
 
 #graficosComparativos {
-    border: solid 5px black;
+    border: solid 5px #000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -393,4 +436,14 @@ canvas {
     /* border: solid 5px white; */
     width: 50%;
     height: 100%;
+}
+.porcentagem {
+    position: absolute;
+    top: 43%;
+    right: 25%;
+    z-index: 100;
+    transform: translate(- 50%);
+    font-size: 32px;
+    color: white;
+    font-weight: 600;
 }

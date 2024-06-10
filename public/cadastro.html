@@ -60,7 +60,7 @@
                     <div id="nome_cadastro">
 
                         <div class="nomes">
-                            <h3 class="h3_nomes" style="color: white;font-size: 18px;font-weight: normal;">*Nome de
+                            <h3 class="h3_nomes" style="color: white;font-size: 18px;font-weight: normal;">* Nome de
                                 usuário: </h3>
                             <input type="text" id="ipt_nome_usuario" placeholder="xX-F3L1P3-Xx" required>
                         </div>
@@ -73,10 +73,10 @@
 
                     </div>
 
-                    <h3>*Endereço de email:</h3>
+                    <h3>* Endereço de email:</h3>
                     <input type="email" id="ipt_email" placeholder="felipe@valorant-club.com">
 
-                    <h3>*Senha:</h3>
+                    <h3>* Senha: <span style="color: red;"> (Deve ter no minimo 6 caracteres & 1 especial)</span> </h3>
                     <input type="password" id="ipt_senha" placeholder="•••••••••••••">
 
                     <h3>Sua história:</h3>
@@ -111,14 +111,36 @@
         var emailVar = ipt_email.value
         var senhaVar = ipt_senha.value
         var historiaVar = ipt_historia.value
+        
+        var temCaracter = false
+        var atendeSenhas = false
+        
 
-        if (
-            nomeUsuarioVar == "" ||
-            emailVar == "" ||
-            senhaVar == ""
-        ) {
+       
+
+        for (var index = 0; index <= emailVar.length; index++) {
+            if (emailVar[index] == "@" && emailVar[index] == ".") {
+                alert(`"e" encontrado na posição ${index + 1}`)
+                temCaracter = true
+            }
+        }
+        
+        var caracteresEspeciais = ['!','@','#','$','%','*','?']
+        for (var index = 0; index <= senhaVar.length; index++) {
+            if (senhaVar[index] == caracteresEspeciais) {
+                alert(`"e" encontrado na posição ${index + 1}`)
+                temCaracter = true
+            }
+        }
+        
+        if (nomeUsuarioVar == "" || emailVar == "" || senhaVar == "") {
             alert("Os campos com * DEVEM serem preenchidos")
+        } else if (temCaracter == false) {
+            alert("Insira um Email válido !")
+        } else if (atendeSenhas == false) {
+            alert("A sua senha não atende os requisitos de segurança !")
         } else {
+
             // Enviando os valores das inputs
             fetch("/usuarios/cadastrar", {
                 method: "POST",
@@ -137,11 +159,11 @@
                     console.log("caiu aqui dentro: ", resposta);
                     if (resposta.ok) {
                         alert("CADASTRO REALIZADO COM SUCESSO !");
-                        ipt_nome_usuario.value  = ""
-                        ipt_nome_real.value  = ""
-                        ipt_email.value  = ""
-                        ipt_senha.value  = ""
-                        ipt_historia.value  = ""
+                        ipt_nome_usuario.value = ""
+                        ipt_nome_real.value = ""
+                        ipt_email.value = ""
+                        ipt_senha.value = ""
+                        ipt_historia.value = ""
                         window.location.href = "login.html"
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
@@ -152,4 +174,5 @@
                 });
         }
     }
+
 </script>

@@ -2,11 +2,30 @@ body {
     margin: 0;
     padding: 0;
     background-color: #23303C;
+    overflow-x: hidden;
     font-family: "Inter";
+    scroll-behavior: smooth;
+}
+*{
+    scroll-behavior: smooth;
+
 }
 
 /*  ----------------------  navbar -----------------------------------*/
-
+.home {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../assets/imgs/yoru.jpg);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'bebas neue';
+    font-size: 102px;
+    color: white;
+    box-shadow: inset 0px -350px 100px rgba(0, 0, 0, 0.637);
+    
+}
 
 #nav_bar {
     display: flex;

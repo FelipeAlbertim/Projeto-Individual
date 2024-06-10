@@ -19,6 +19,9 @@
 </head>
 
 <body>
+    <div class="fundo">
+    </div>
+    <div class="frente">
     <div id="nav_bar">
         <div id="logo">
             <div id="foto">
@@ -76,6 +79,9 @@
         <div id="fim" style="display: none;">
 
             <div class="graficos">
+                <div class="porcentagem">
+                    <h1>10%</h1>
+                </div>
 
                 <div class="dash">
 
@@ -102,9 +108,10 @@
         </div>
 
         <div id="graficosComparativos" class="graficos" style="display: none;">
+        
 
             <div id="titulo_graficos">
-                <h1> 🫵 Você X Mundo 🌎 </h1>
+   
             </div>
 
             <div class="graficos1">
@@ -146,7 +153,9 @@
     </div>
 
 
-    </div>
+ 
+</div>
+</div>
 </body>
 
 </html>
@@ -199,13 +208,16 @@
         textoRespostaSelecionada = document.getElementById(`Resposta_${respostaId}`).innerText;
         document.querySelectorAll('.resposta').forEach(element => {
             element.style.backgroundColor = '';
+            element.style.boxShadow = '';
+            element.style.border = '';
         });
-        document.getElementById(`Resposta_${respostaId}`).style.backgroundColor = 'lightblue';
+        document.getElementById(`Resposta_${respostaId}`).style.boxShadow = '0px 10px 100px 10px #43b1f1';
+        document.getElementById(`Resposta_${respostaId}`).style.border = '2px solid #43b1f1';
     }
 
     function escondeIntrucao() {
         introducao.style.display = 'none';
-        questao.style.display = 'block';
+        questao.style.display = 'flex';
         if (fazendoQuiz = true) {
             counter = setInterval(tempo, 1000)
         }
@@ -266,6 +278,9 @@
                         var box_resposta = document.getElementById(box_resposta_id);
                         box_resposta.innerHTML = textoResposta;
                         box_resposta.style.backgroundColor = '';
+                        box_resposta.style.backgroundColor = '';
+            box_resposta.style.boxShadow = '';
+            box_resposta.style.border = '';
 
                         if (resposta[i].correta == true) {
                             textoRespostaCorreta = textoResposta
