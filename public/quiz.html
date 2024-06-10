@@ -79,6 +79,7 @@
                     style="height: auto; width: 100%; display: flex;flex-direction: column; align-items: center; justify-content: center;">
                     <p id="status_usuario" style="margin-bottom: 2rem;"></p>
                     <div id="img_usuario"></div>
+                    <p id="elo_usuario"></p>
                     <p id="mensagem_usuario" style="margin-top: 2rem;"></p>
                 </div>
             </div>
@@ -91,6 +92,8 @@
     </div>
 </body>
 
+</html>
+
 <script>
     var idUsuario = sessionStorage.ID_USUARIO;
     var nomeUsuario = sessionStorage.NOME_USUARIO;
@@ -98,20 +101,23 @@
 
     var ranking = [];
     var posicaoRankingUsuario = 0;
+    var nomeElo = ""
 
     function inicializarPagina() {
-    if (emailUsuario == null || nomeUsuario == null || idUsuario == null) {
-        aparecerBotaoCadastro();
-        status_usuario.innerHTML = '<span style="font-size:16px;font-weight: bold"> Venha fazer parte da comunidade !</span>'
-        mensagem_usuario.innerHTML = '<span style="font-size:18px;color:white;"> Clique <a href="cadastro.html" style="font-size:20px;color:#FF4655;">aqui</a> para fazer cadastro </span>';
-        img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/sem-ranque.webp" alt="Sem Ranque">`;
-    } else {
-        aparecerBotaoSair();
+        if (nomeUsuario == undefined) {         
+            status_usuario.innerHTML = '<span style="font-size:16px;font-weight: bold"> Venha fazer parte da comunidade !</span>'
+            mensagem_usuario.innerHTML = '<span style="font-size:18px;color:white;"> Clique <a href="cadastro.html" style="font-size:20px;color:#FF4655;">aqui</a> para fazer cadastro </span>';
+            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/icone-elo/sem.webp" alt="Sem Ranque">`;
+            aparecerBotaoCadastro();
+            listaRanking()
+        } else {
+            aparecerBotaoSair();
+            listaRanking().then(() => {
+            buscaPosicaoUsuario();
+        });
+        }
+        
     }
-    listaRanking().then(() => {
-        buscaPosicaoUsuario();
-    });
-}
 
     function aparecerBotaoCadastro() {
         btn_cadastro.style.display = 'block';
@@ -150,34 +156,38 @@
         for (var index = 0; index < ranking.length; index++) {
             if (ranking[index].idUsuario == idUsuario) {
                 posicaoRankingUsuario = index + 1;
+                nomeElo = ranking[index].Elo
+                elo_usuario.innerHTML = nomeElo
                 break;
             }
         }
         status_usuario.innerHTML = `Olá <span style="color:red;">${nomeUsuario}</span>`;
-        mensagem_usuario.innerHTML = `Você está em ${posicaoRankingUsuario}° lugar`;
-        img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/radiante-icone.png" alt="Radiante">`;
+        if (posicaoRankingUsuario > 0) {
+            mensagem_usuario.innerHTML = `Você está em ${posicaoRankingUsuario}° lugar`;
+            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/icone-elo/${nomeElo}.png" alt="Radiante">`;
+        } else {
+            mensagem_usuario.innerHTML = `Clique em <span style="color:red;">JOGAR AGORA</span> para iniciar sua primeira tentativa !`;
+            img_usuario.innerHTML = `<img style="width: 150px; height: 150px;" src="assets/imgs/icone-elo/sem.webp" alt="Radiante">`;
+        }
 
         listaTop3();
     }
 
-
     function listaTop3() {
-    var ul = rankingList
+        var ul = rankingList
 
-    ul.innerHTML = "";
+        ul.innerHTML = "";
 
-    for (var index = 0; index < 10; index++) {
-        var li = document.createElement("li");
-        li.textContent = (index + 1) + "° - " + ranking[index].NomeUsuario;
-        ul.appendChild(li);
+        for (var index = 0; index < 10; index++) {
+            var li = document.createElement("li");
+            li.textContent = (index + 1) + "° - " + ranking[index].NomeUsuario;
+            ul.appendChild(li);
+        }
+
+        if (posicaoRankingUsuario === 0 && ranking.length > 0) {
+            mensagem_usuario.innerHTML = 'Clique em <span style="color:#FF4655;">JOGAR AGORA</span> para participar do ranking!';
+        }
     }
-
-    if (posicaoRankingUsuario === 0 && ranking.length > 0) {
-        mensagem_usuario.innerHTML = 'Clique em <span style="color:#FF4655;">JOGAR AGORA</span> para participar do ranking!';
-    }
-}
 
 
 </script>
-
-</html>

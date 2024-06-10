@@ -10,16 +10,16 @@ requisitoMinimoAcerto int,
 requisitoMaximoTempo decimal(10,3),
 requisitoMinimoTempo decimal(10,3)
 );
-
 insert into elo values
 
 -- CRITÉRIOS DE CADA ELO
 
-(default,'Radiante',10,10,120,0), -- 10 acertos em menos de 2 minutos
-(default,'Imortal',10,9,180,0), -- 9 acertos em até 3 minutos
-(default,'Diamante',10,6,300,0), -- 6 acertos em até 5 minutos 
-(default,'Ouro',10,3,420,0), -- 3 acertos em até 7 minutos
+(default,'Radiante',10,10,120,0), -- 10 acertos em menos de 2 minutos ok 
+(default,'Imortal',10,9,180,0), -- 9 acertos em até 3 minutos ok
+(default,'Diamante',10,6,300,0), -- 6 acertos em até 5 minutos ok
+(default,'Ouro',10,3,420,0), -- 3 acertos em até 7 minutos ok 
 (default,'Prata',10,0,600,0); -- 0 acertos em até 10 minutos
+
 
 create table usuario (
 idUsuario int primary key auto_increment,
@@ -32,9 +32,10 @@ historia longtext,
 foreign key (fkElo) references elo(idElo));
 
 insert into usuario values
-(default,null,'Makita#wap','Felipe Albertim','felipe@gmail.com','123','bla bla');
+(default,1,'Makita#wap','Felipe Albertim','felipe@gmail.com','123','Conheci o valorant por meio de amigos da escola !'),
+(default,3,'dev239#css','Samuel Luciano','samuel@gmail.com','123','Conheci pelo seu design bom demais !'),
+(default,2,'KingRondonia#skt','Alejandro Castor','alejandro@gmail.com','123','Conheci pelo seus poderes !');
 
-select * from usuario join elo on fkElo = idElo;
 
 create table quiz(
 idQUiz int auto_increment primary key,
@@ -130,21 +131,32 @@ dataHoraTentativa datetime default current_timestamp,
 tempoTentativa decimal(10,3),
 pontuacao int);
 
+insert into tentativa (idTentativa,fkUsuario, fkQuiz, dataHoraTentativa, tempoTentativa, pontuacao)
+values 
+(default, 1, 1 ,'2024-06-09 09:00:00', 55.125, 10), 
+(default, 2, 1 , '2024-06-09 10:00:00', 60.001, 6),
+(default, 3,  1 ,'2024-06-09 10:30:00', 95.789, 9);
+
 create table ranking(
 fkUsuario int,
 fkQuiz int,
 fkTentativa int,
-fkPergunta int,
-fkResposta int,
 foreign key (fkUsuario) references usuario(idUsuario),
 foreign key (fkQuiz) references quiz(idQuiz),
 foreign key (fkTentativa) references tentativa(idTentativa),
-foreign key (fkPergunta) references pergunta(idPergunta),
-foreign key (fkResposta) references resposta(idResposta),
-primary key (fkUsuario,fkQuiz,fkTentativa,fkPergunta,fkResposta));
+primary key (fkUsuario,fkQuiz,fkTentativa));
+
+insert into ranking values
+(1,1,1),
+(2,1,1),
+(3,1,1);
+
 
 /*	INÍCIO DOS SELECT's	*/
 
+select count(*) from ranking;
+
+select * from usuario;
 
 select 
     tentativa.fkUsuario as idUsuario,
@@ -170,24 +182,10 @@ join
 join 
     usuario on tentativa.fkUsuario = usuario.idUsuario
 join 
-    elo on usuario.fkElo = elo.idElo
+    elo on usuario.fkElo = elo.idElo    
 order by 
     tentativa.fkQuiz, PosicaoRanking;
 
-
-    
-    
-select * from tentativa ;
-
-
-
-
-
--- inserirResultadoQuiz(acertos,tempo,idUsuario)
-
--- insert into tentativa(fkQuiz,fkUsuario,tempoTentativa, pontuacao) values (1,${idUsuario},${tempo},${acertos});
-select * from tentativa;
-select * from usuario;
 
 select idTentativa as Tentativa,
         usuario.nome as 'Nome do usuario',
@@ -203,16 +201,14 @@ select min(tempoTentativa) as minTempoTentativa,
 	avg(tempoTentativa) as mediaTempoTentativa,
     max(tempoTentativa) as maximoTempoTentativa
     from tentativa join usuario
-    on fkUsuario = idUsuario    
-    where idUsuario = 1;
+    on fkUsuario = idUsuario;
 
 select min(tempoTentativa) as minTempoTentativa,
 	avg(tempoTentativa) as mediaTempoTentativa,
     (select tempoTentativa as usuarioTempoTentativa from tentativa join usuario on tentativa.fkUsuario = idUsuario where idUsuario = 1),
     max(tempoTentativa) as maximoTempoTentativa
     from tentativa join usuario
-    on fkUsuario = idUsuario    
-    where idUsuario = 1;
+    on fkUsuario = idUsuario;
     
 select min(tempoTentativa) as 'minTempo',
         avg(tempoTentativa) as 'mediaTempo',
@@ -224,15 +220,3 @@ select min(tempoTentativa) as 'minTempo',
         max(tempoTentativa) as 'maxTempo'
     from tentativa
     where fkQuiz = 1;
-	
-    use valorant_club;
-    select email,senha from usuario where email = 'felipe@gmail.com';
-    
-    select * from usuario;
-    select * from tentativa;
-    
-   
-    
-    
-    
-select nomeElo, count(idUsuario) as qtdUsuario from usuario join elo on fkElo = idElo group by idElo;

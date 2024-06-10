@@ -113,7 +113,7 @@
                     style="display: flex;flex-direction: column;height: 100%;  width: 50%; align-items: center; justify-content: center;gap: 2rem;">
 
                     <div id="seuElo"
-                        style="border: solid 4px crimson;border-radius: 5px;background-color: rgb(15, 25, 35);display: flex;flex-direction: column;height: 45%;width: 60%;align-items: center;justify-content: center;gap: 1rem;">
+                        style="border: solid 4px crimson;border-radius: 5px;background-color: rgb(15, 25, 35);display: flex;flex-direction: column;height: 50%;width: 60%;align-items: center;justify-content: center;gap: 1rem;">
                         <h1 style="font-size: 22px;color: white;">
                             Olá <span id="nomeUsuarioRanking" style="color: crimson;font-size: 22px;">FELIPE</span></h1>
                         <h2
@@ -124,11 +124,12 @@
                                 <!-- eloUsuario -->
                             </span>
                         </h2>
-                        <img src="assets/imgs/radiante-icone.png" alt="" style="width: 100px;height: 100px;">
+                        <div id="img_usuario"></div>
+                        
                         <p id="posicaoElo" style="color: white;">Você está em </p>
                     </div>
 
-                    <div id="grafico_comparativo_tempo" style="width: 100%;height: 55%;">
+                    <div id="grafico_comparativo_tempo" style="width: 100%;height: 50%;">
                         <canvas id="comparativoTempo"></canvas>
                     </div>
                 </div>
@@ -136,7 +137,10 @@
                     <canvas id="comparativoGlobal1"></canvas>
                 </div>
             </div>
-            <button> <a href="quiz.html">Quer fazer denovo? Clique Aqui !</a> </button>
+            <button style="text-decoration: none; color: white; background-color: #4CAF50; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">
+                <a href="quiz.html" style="color: inherit;">Quer fazer denovo? Clique Aqui !</a>
+            </button>
+            
         </div>
 
     </div>
@@ -607,7 +611,9 @@
                 break;
             }
         }
+
         posicaoElo.innerHTML += ` ${posicaoRankingUsuario}° lugar`;
+        img_usuario.innerHTML = `<img src="assets/imgs/icone-elo/${nomeElo}.png" alt="" style="width: 100px;height: 100px;">`
     }
 
 </script>

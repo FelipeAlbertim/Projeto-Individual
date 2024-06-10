@@ -9,8 +9,8 @@ function validarSessao() {
         // b_usuario.innerHTML = nome;
         window.location = "../questionario.html";
     } else {
-        alert("Login Obrigatório !")        
-        window.location = "../login.html";
+        alert("Cadastro Obrigatório !")        
+        window.location = "../cadastro.html";
     }
 }
 
