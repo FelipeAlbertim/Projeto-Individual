@@ -80,7 +80,7 @@
 
             <div class="graficos">
                 <div class="porcentagem">
-                    <h1 id="porcentagemAcertos">10%</h1>
+                    <h1 id="porcentagemAcertos"></h1>
                 </div>
 
                 <div class="dash">
@@ -515,7 +515,7 @@
         var tempoFimQuiz = Date.now();
         tempoTotalQuiz = (tempoFimQuiz - tempoInicioQuiz) / 1000;
         spanSegundos.innerHTML = tempoTotalQuiz.toFixed(2);
-        porcentagemAcerto.innerHTML = acertos / total
+        porcentagemAcerto.innerHTML = `${((totalPerguntas / acertos) * 10).toFixed(0)}%`;
     }
 
     function exibiGraficoComparativo() {
@@ -628,7 +628,7 @@
             }
         }
 
-        posicaoElo.innerHTML += ` ${posicaoRankingUsuario}° lugar`;
+        posicaoElo.innerHTML += ` ${posicaoRankingUsuario}° lugar`;        
         img_usuario.innerHTML = `<img src="assets/imgs/icone-elo/${nomeElo}.png" alt="" style="width: 100px;height: 100px;">`
     }
 
