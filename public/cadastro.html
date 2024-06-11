@@ -133,9 +133,10 @@
         
         var caracteresEspeciais = ['!','@','#','$','%','*','?']
         for (var index = 0; index <= senhaVar.length; index++) {
-            if (senhaVar[index] == caracteresEspeciais) {
-                alert(`"e" encontrado na posição ${index + 1}`)
-                temCaracter = true
+            for (var i = 0; i < caracteresEspeciais.length; i++) {
+                if (senhaVar[index] == caracteresEspeciais[i]) {
+                    atendeSenhas = true
+                }
             }
         }
         
