@@ -20,14 +20,6 @@ function limparSessao() {
     window.location = "../login.html";
 }
 
-// carregamento (loading)
-function aguardar() {
-    alert('CARREGANDO....')
-    
-    // var divAguardar = document.getElementById("div_aguardar");
-    // divAguardar.style.display = "flex";
-}
-
 function finalizarAguardar(texto) {
     alert("FINALIZANDO AGUARDAR")
 
