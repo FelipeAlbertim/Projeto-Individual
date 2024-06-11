@@ -1,30 +1,33 @@
-body {
+* {
+    scroll-behavior: smooth;
     margin: 0;
     padding: 0;
+}
+
+body {
     background-color: #23303C;
     overflow-x: hidden;
     font-family: "Inter";
     scroll-behavior: smooth;
 }
-*{
-    scroll-behavior: smooth;
-
-}
 
 /*  ----------------------  navbar -----------------------------------*/
 .home {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    background-image: url(../assets/imgs/yoru.jpg);
+    background-image: url(/assets/imgs/yoru.jpg);
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: inset 0px -350px 100px rgba(0, 0, 0, 0.637);
+
+}
+
+#nomeHome {
     font-family: 'bebas neue';
     font-size: 102px;
     color: white;
-    box-shadow: inset 0px -350px 100px rgba(0, 0, 0, 0.637);
-    
 }
 
 #nav_bar {
@@ -126,8 +129,8 @@ body {
 
 .imagem {
     overflow: hidden;
-    width: 100vh; 
-    height: 60vh; 
+    width: 100vh;
+    height: 60vh;
 }
 
 .imagem img {
@@ -136,7 +139,7 @@ body {
     object-fit: cover;
 }
 
-#botao_agentes button{
+#botao_agentes button {
     color: white;
     font-family: "Inter";
     font-size: 16px;
@@ -145,12 +148,12 @@ body {
     background-color: #FF4655;
     border-radius: 10px;
     border: solid #FF4655;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 /*----------------------  section mapas -----------------------------------*/
 
-#mapas{    
+#mapas {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -164,7 +167,7 @@ body {
     width: 30%;
 }
 
-#botao_mapas button{
+#botao_mapas button {
     color: white;
     font-family: "Inter";
     font-size: 16px;
@@ -173,7 +176,7 @@ body {
     background-color: #FF4655;
     border-radius: 10px;
     border: solid #FF4655;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 #botao_mapas button:hover {
@@ -199,12 +202,13 @@ body {
 #texto {
     display: flex;
     flex-direction: column;
-    text-align: center; /* Centraliza o texto */
+    text-align: center;
+    /* Centraliza o texto */
     color: white;
     font-size: 24px;
 }
 
-#botao_quiz button{
+#botao_quiz button {
     color: white;
     font-family: "Inter";
     font-size: 16px;
@@ -213,7 +217,7 @@ body {
     background-color: #FF4655;
     border-radius: 10px;
     border: solid #FF4655;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 #botao_quiz button:hover {
@@ -227,19 +231,18 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    padding-bottom: 5%; 
 }
 
 #titulo {
-    width: 90%; 
+    width: 90%;
     text-align: center;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
 
 #sobre #titulo h2 {
     color: white;
     padding: 10px;
-    font-size: 5vh; /* Definição de tamanho de fonte */
+    font-size: 5vh;
 }
 
 
@@ -259,7 +262,7 @@ body {
 
 .video iframe {
     width: 100vh;
-    height: 60vh; 
+    height: 60vh;
     margin-left: 20px;
 }
 
@@ -272,9 +275,107 @@ body {
 
 #sobre hr {
     width: 90%;
-    margin-top: 2%;
-    background-color: #FF4655 ;
-    border-color: #FF4655; 
+    background-color: #FF4655;
+    border-color: #FF4655;
     border-radius: 7px;
     height: 5px;
+}
+
+
+
+/*----------------------  section sobre mim -----------------------------------*/
+
+#eu {
+    display: flex;
+    height: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+#sobreMim {
+    width: 90%;
+    display: flex;
+    margin-top: 35px;
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+#meuTexto {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    justify-content: center;
+    width: 40%;
+}
+
+#meuTexto h1 {
+    color: #FF4655;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+p {
+    padding: 15px;
+    font-size: 22px;
+}
+
+
+/*----------------------  section LOUD -----------------------------------*/
+
+
+#bgs {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    color: #FF4655;
+    font-size: 30px;
+}
+
+#imagens {
+    padding: 10px;
+    margin: 20px;
+}
+
+.imgMenor {
+    height: 600px;
+    padding: 5px;
+}
+
+/*---------------------- footer -----------------------------------*/
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#itens_footer {
+    display: flex;
+    width: 90%;
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#textoFooter {
+    color: #fff;
+}
+
+#mediasSociais {
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+}
+
+.redes {
+    padding: 0px 20px 0px 20px;
 }

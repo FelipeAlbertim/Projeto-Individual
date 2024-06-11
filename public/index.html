@@ -23,6 +23,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 </head>
 
@@ -55,8 +58,7 @@
     <!-- TÉRMINO DA NAVBAR -->
 
     <section class="home">
-        <h1>Valorant clube</h1>
-
+        <h1 id="nomeHome">Valorant's Club</h1>
     </section>
 
     <section id="conheca">
@@ -123,7 +125,7 @@
 
     <section id="sobre">
         <div id="titulo">
-            <h2>Sobre o Jogo</h2>
+            <h2 style="color:#FF4655;">Sobre o Jogo</h2>
         </div>
         <div class="conteudo">
             <div class="video">
@@ -141,9 +143,73 @@
             </div>
         </div>
 
-        <hr>
 
+
+        <section id="sobreMim">
+            <div id="eu">
+                <div id="meuTexto">
+                    <h1 style="font-size: 35px;"> Como eu conheci o valorant ?</h1>
+
+                    <p style="color: white;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Conheci o Valorant por meio de um amigo na minha antiga escola
+                        por volta de 2021... 2022, e desde então nunca mais parei. Foram tantos momentos e experiências
+                        que hoje posso afirmar que definitivamente não foi apenas um jogo. Graças ao Valorant, conheci
+                        pessoas incríveis que, por sua vez, contribuíram para quem sou hoje. Só tenho a agradecer a
+                        todos. Muito obrigado a todos que me apoiaram ! "
+                    </p>
+
+                    <p style="text-align: end;color: white;">
+                        <i><u>Felipe Albertim.</u></i>
+                    </p>
+                </div>
+
+                <div id="minhaImg">
+                    <img src="assets/imgs/eu.jpg" alt="" style="height: 500px;border-radius: 20px;">
+                </div>
+            </div>
+
+            <div id="bgs" style="display: flex;flex-direction: column;">
+
+                <h1>Melhores Momentos - BGS 2022</h1>
+
+                <div id="imagens" style="display: flex;flex-direction: row;align-items: center;">
+                    <img class="imgMenor" style="height:450px;" src="assets/imgs/loud2/IMG-20221010-WA0136.jpg" alt="">
+                    <img class="imgMenor" style="height:520px;" src="assets/imgs/loud2/IMG-20221010-WA0137.jpg" alt="">
+                    <img class="imgMenor" src="assets/imgs/loud2/IMG-20221010-WA0140.jpg" alt="">
+                    <img class="imgMenor" style="height:520px" src="assets/imgs/loud2/IMG-20221010-WA0138.jpg" alt="">
+                    <img class="imgMenor" style="height:450px;" src="assets/imgs/loud2/IMG-20221010-WA0139.jpg" alt="">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <hr>
     </section>
+
+    <footer>
+
+        <div id="itens_footer">
+
+            <div id="textoFooter">
+                <p>Valorant's Club - © By Felipe Albertim</p>
+            </div>
+
+            <div id="listaLinks">
+                <ul id="mediasSociais">
+                    <li class="redes"><a href="https://www.instagram.com/felipe.albertim/"><img
+                                src="assets/icon/Instagram.png"></a></li>
+                    <li class="redes"><a href="https://github.com/FelipeAlbertim"><img
+                                src="assets/icon/github.png"></a></li>
+                    <li class="redes"><a href="https://www.linkedin.com/in/felipe-ferreira-albertim/"><img
+                                src="assets/icon/linkedin.png" style="height: 30px;width: 30px;" ></a></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </footer>
 
 </body>
 
@@ -169,4 +235,35 @@
     else {
         aparecerBotaoSair()
     }
+
+    let posicaoAtual = 0;
+
+    function mostrarImagem(posicao) {
+        const slides = document.querySelectorAll('.item-carrosel');
+        const totalSlides = slides.length;
+
+        if (posicao >= totalSlides) {
+            posicaoAtual = 0;
+        } else if (posicao < 0) {
+            posicaoAtual = totalSlides - 1;
+        } else {
+            posicaoAtual = posicao;
+        }
+
+        const offset = -posicaoAtual * 100;
+        document.querySelectorAll('.carrosel-inserir').forEach(carrosel => {
+            carrosel.style.transform = `translateX(${offset}%)`;
+        });
+    }
+
+    function proximoSlide() {
+        mostrarImagem(posicaoAtual + 1);
+    }
+
+    function anteriorSlide() {
+        mostrarImagem(posicaoAtual - 1);
+    }
+
+    mostrarImagem(posicaoAtual);
+
 </script>

@@ -80,7 +80,7 @@
 
             <div class="graficos">
                 <div class="porcentagem">
-                    <h1>10%</h1>
+                    <h1 id="porcentagemAcertos">10%</h1>
                 </div>
 
                 <div class="dash">
@@ -515,6 +515,7 @@
         var tempoFimQuiz = Date.now();
         tempoTotalQuiz = (tempoFimQuiz - tempoInicioQuiz) / 1000;
         spanSegundos.innerHTML = tempoTotalQuiz.toFixed(2);
+        porcentagemAcerto.innerHTML = acertos / total
     }
 
     function exibiGraficoComparativo() {
