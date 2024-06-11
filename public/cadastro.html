@@ -116,14 +116,20 @@
         var atendeSenhas = false
         
 
-       
+       var email_validado = 0;
 
         for (var index = 0; index <= emailVar.length; index++) {
-            if (emailVar[index] == "@" && emailVar[index] == ".") {
-                alert(`"e" encontrado na posição ${index + 1}`)
+            if (emailVar[index] == ".") {
                 temCaracter = true
+                email_validado++;
+            }
+
+            if (emailVar[index] == "@") {
+                temCaracter = true
+                email_validado++;
             }
         }
+
         
         var caracteresEspeciais = ['!','@','#','$','%','*','?']
         for (var index = 0; index <= senhaVar.length; index++) {
@@ -135,7 +141,7 @@
         
         if (nomeUsuarioVar == "" || emailVar == "" || senhaVar == "") {
             alert("Os campos com * DEVEM serem preenchidos")
-        } else if (temCaracter == false) {
+        } else if (email_validado != 2) {
             alert("Insira um Email válido !")
         } else if (atendeSenhas == false) {
             alert("A sua senha não atende os requisitos de segurança !")
