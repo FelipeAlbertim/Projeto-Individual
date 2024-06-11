@@ -4,6 +4,20 @@
     padding: 0;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #919191;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #FF4655;
+}
+
 body {
     background-color: #23303C;
     overflow-x: hidden;

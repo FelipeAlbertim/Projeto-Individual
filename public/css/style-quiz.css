@@ -119,13 +119,13 @@ body {
     width: 25px;
   }
   
-  /* Track */
+  
   ::-webkit-scrollbar-track {
     background: #d4d4d4;
     border-radius: 25px
   }
   
-  /* Handle */
+  
   ::-webkit-scrollbar-thumb {
     background: #FF4655;
     border-radius: 25px
