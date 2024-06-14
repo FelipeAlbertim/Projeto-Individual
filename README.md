@@ -69,8 +69,8 @@ Scripts SQL para criação e gerenciamento do banco de dados MySQL.
 6. **Configuração do Front-End:**
     - Abra os arquivos HTML no navegador ou configure um servidor estático para servir os arquivos.
 
-## Contato
+## 📬 Contato
 
-Qualquer dúvida, melhoria, sugestão estou de portas abertas para ouvir 😁
+Qualquer dúvida, melhoria ou sugestão, estou à disposição para ouvir 😁
 
-[E-mail de contato:](felipe.albertim@sptech.school)
+📧 E-mail de contato: [felipe.albertim@sptech.school](mailto:felipe.albertim@sptech.school)
